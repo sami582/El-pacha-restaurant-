@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - El Pacha Restaurant</title>
+    <meta name="description" content="Learn about El Pacha Restaurant's story, our two unique dining rooms, and our commitment to exceptional culinary experiences in Sousse.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.js"></script>
+    <link href="https://unpkg.com/splitting@1.0.6/dist/splitting.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-brown: #8B4513;
+            --secondary-beige: #F5F5DC;
+            --accent-green: #6B8E23;
+            --text-dark: #2C1810;
+            --text-light: #FFFFFF;
+            --background: #FEFEFE;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Navigation Styles */
+        .navbar {
+            background: rgba(254, 254, 254, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(254, 254, 254, 0.98);
+            box-shadow: 0 4px 20px rgba(139, 69, 19, 0.1);
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-brown);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-brown);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-brown);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(245, 245, 220, 0.2) 100%);
+            height: 60vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('resources/about-room1.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.4) 0%, rgba(245, 245, 220, 0.2) 100%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 300;
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-brown);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+        
+        /* Story Section */
+        .story-section {
+            background: linear-gradient(135deg, var(--secondary-beige) 0%, rgba(139, 69, 19, 0.05) 100%);
+        }
+        
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+        
+        .story-text p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .story-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+        }
+        
+        /* Rooms Section */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+        
+        .room-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .room-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(139, 69, 19, 0.2);
+        }
+        
+        .room-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .room-card:hover .room-image {
+            transform: scale(1.05);
+        }
+        
+        .room-content {
+            padding: 2rem;
+        }
+        
+        .room-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-brown);
+        }
+        
+        .room-description {
+            color: var(--text-dark);
+            opacity: 0.8;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .room-features {
+            list-style: none;
+        }
+        
+        .room-features li {
+            padding: 0.5rem 0;
+            color: var(--accent-green);
+            font-weight: 500;
+        }
+        
+        .room-features li i {
+            margin-right: 0.5rem;
+            color: var(--primary-brown);
+        }
+        
+        /* Values Section */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-brown), var(--accent-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--text-light);
+            font-size: 2rem;
+        }
+        
+        .value-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-brown);
+        }
+        
+        .value-description {
+            color: var(--text-dark);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            padding: 3rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary-beige);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .story-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .rooms-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-display text-2xl font-bold text-primary-brown">
+                    <a href="index.html">El Pacha</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link active">About</a>
+                    <a href="menu.html" class="nav-link">Menu</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="reservation.html" class="nav-link">Reservations</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-primary-brown" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div class="md:hidden hidden mt-4 pb-4" id="mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link active">About</a>
+                    <a href="menu.html" class="nav-link">Menu</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="reservation.html" class="nav-link">Reservations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content container mx-auto px-6">
+            <h1 class="hero-title font-display">About El Pacha</h1>
+            <p class="hero-subtitle">Where Tradition Meets Excellence</p>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section section">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title font-display">Our Story</h2>
+            
+            <div class="story-content">
+                <div class="story-text">
+                    <p>
+                        Welcome to El Pacha Restaurant, a culinary gem nestled in the heart of Sousse. 
+                        Our journey began with a simple vision: to create a dining experience that 
+                        celebrates the rich flavors of Tunisian cuisine while embracing contemporary 
+                        culinary techniques.
+                    </p>
+                    <p>
+                        Named after the traditional Tunisian term for "master" or "chief," El Pacha 
+                        represents our commitment to excellence in every aspect of the dining experience. 
+                        From the carefully selected ingredients to the artful presentation of each dish, 
+                        we strive to create memorable moments for our guests.
+                    </p>
+                    <p>
+                        Our restaurant features two distinct dining environments, each designed to cater 
+                        to different moods and occasions. Whether you're seeking an intimate fine dining 
+                        experience or a relaxed gathering with friends, El Pacha offers the perfect setting.
+                    </p>
+                    <p>
+                        We believe that great food is more than just sustenance—it's a celebration of 
+                        culture, tradition, and the joy of sharing meals with loved ones. Our team is 
+                        passionate about creating dishes that tell a story and create lasting memories.
+                    </p>
+                </div>
+                
+                <div>
+                    <img src="resources/8.jpg" alt="Restaurant Story" class="story-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section class="section container mx-auto px-6">
+        <h2 class="section-title font-display">Our Dining Rooms</h2>
+        <p class="section-subtitle">
+            Two unique spaces, each offering a distinct dining experience
+        </p>
+        
+        <div class="rooms-grid">
+            <div class="room-card">
+                <img src="resources/7.jpg" alt="Restaurant Style Room" class="room-image">
+                <div class="room-content">
+                    <h3 class="room-title">Restaurant Style</h3>
+                    <p class="room-description">
+                        Our formal dining room offers an elegant atmosphere perfect for special occasions, 
+                        business dinners, and intimate celebrations. The sophisticated decor features 
+                        warm earth tones, premium furnishings, and soft ambient lighting.
+                    </p>
+                    <ul class="room-features">
+                        <li><i class="fas fa-check-circle"></i> Intimate table settings</li>
+                        <li><i class="fas fa-check-circle"></i> Perfect for special occasions</li>
+                        <li><i class="fas fa-check-circle"></i> Elegant ambiance</li>
+                        <li><i class="fas fa-check-circle"></i> Professional service</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="room-card">
+                <img src="resources/9.jpg" alt="Lounge Style Room" class="room-image">
+                <div class="room-content">
+                    <h3 class="room-title">Lounge Style</h3>
+                    <p class="room-description">
+                        Our relaxed lounge area provides a comfortable setting for casual dining, 
+                        friendly gatherings, and leisurely meals. The contemporary design includes 
+                        plush seating and a more informal atmosphere.
+                    </p>
+                    <ul class="room-features">
+                        <li><i class="fas fa-check-circle"></i> Comfortable seating</li>
+                        <li><i class="fas fa-check-circle"></i> Casual atmosphere</li>
+                        <li><i class="fas fa-check-circle"></i> Perfect for groups</li>
+                        <li><i class="fas fa-check-circle"></i> Relaxed dining experience</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section container mx-auto px-6">
+        <h2 class="section-title font-display">Our Values</h2>
+        <p class="section-subtitle">
+            The principles that guide our commitment to excellence
+        </p>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3 class="value-title">Culinary Excellence</h3>
+                <p class="value-description">
+                    We are committed to using the finest ingredients and innovative techniques 
+                    to create dishes that delight the senses and exceed expectations.
+                </p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h3 class="value-title">Exceptional Service</h3>
+                <p class="value-description">
+                    Our dedicated team provides attentive, personalized service to ensure 
+                    every guest feels welcome and well-cared for throughout their visit.
+                </p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3 class="value-title">Hospitality</h3>
+                <p class="value-description">
+                    Rooted in Tunisian tradition, we believe in the warmth of genuine hospitality 
+                    and creating a welcoming environment for all our guests.
+                </p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3 class="value-title">Fresh Ingredients</h3>
+                <p class="value-description">
+                    We source the freshest local ingredients to ensure the highest quality 
+                    in every dish, supporting local producers and sustainable practices.
+                </p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="value-title">Community</h3>
+                <p class="value-description">
+                    We are proud to be part of the Sousse community and strive to create 
+                    a gathering place where people can connect and create memories.
+                </p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3 class="value-title">Quality</h3>
+                <p class="value-description">
+                    From our kitchen to your table, we maintain the highest standards 
+                    of quality in every aspect of our restaurant operations.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="section container mx-auto px-6 text-center">
+        <h2 class="section-title font-display">Experience El Pacha</h2>
+        <p class="section-subtitle">
+            Ready to discover our culinary world? Book your table today and let us create 
+            an unforgettable dining experience for you.
+        </p>
+        
+        <div class="mt-8">
+            <a href="reservation.html" class="btn btn-primary">Make a Reservation</a>
+            <a href="menu.html" class="btn btn-primary ml-4">View Our Menu</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>El Pacha Restaurant</h3>
+                    <p>A Culinary Experience in Sousse</p>
+                    <p>RJQM+494, Sousse</p>
+                    <p>Phone: +216 23 553 443</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Opening Hours</h3>
+                    <p>Monday: 10 AM – 11:30 PM</p>
+                    <p>Tuesday - Thursday: 10 AM – 12 AM</p>
+                    <p>Friday: 10 AM – 11:30 PM</p>
+                    <p>Saturday: 10 AM – 12 AM</p>
+                    <p>Sunday: 11:30 AM – 12 AM</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <a href="contact.html">Contact Information</a>
+                    <a href="reservation.html">Make a Reservation</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

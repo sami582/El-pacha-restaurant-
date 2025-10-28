@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - El Pacha Restaurant</title>
+    <meta name="description" content="Contact El Pacha Restaurant in Sousse. Find our location, phone number, opening hours, and connect with us on social media.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.js"></script>
+    <link href="https://unpkg.com/splitting@1.0.6/dist/splitting.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-brown: #8B4513;
+            --secondary-beige: #F5F5DC;
+            --accent-green: #6B8E23;
+            --text-dark: #2C1810;
+            --text-light: #FFFFFF;
+            --background: #FEFEFE;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Navigation Styles */
+        .navbar {
+            background: rgba(254, 254, 254, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(254, 254, 254, 0.98);
+            box-shadow: 0 4px 20px rgba(139, 69, 19, 0.1);
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-brown);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-brown);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-brown);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(245, 245, 220, 0.2) 100%);
+            height: 50vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://kimi-web-img.moonshot.cn/img/www.savoredjourneys.com/c7960c8f4650ebbafe8174676c4dd3231b9b9ce8.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.4) 0%, rgba(245, 245, 220, 0.2) 100%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 300;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-brown);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+        
+        /* Contact Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            color: var(--primary-brown);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--secondary-beige);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.15);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-brown);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+        
+        .contact-details h4 {
+            font-size: 1.2rem;
+            color: var(--primary-brown);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .contact-details p, .contact-details a {
+            color: var(--text-dark);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-details a:hover {
+            color: var(--primary-brown);
+            opacity: 1;
+        }
+        
+        /* Hours Section */
+        .hours-section {
+            background: linear-gradient(135deg, var(--secondary-beige) 0%, rgba(139, 69, 19, 0.05) 100%);
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+        
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hours-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .hours-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+        }
+        
+        .hours-day {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-brown);
+            margin-bottom: 0.5rem;
+        }
+        
+        .hours-time {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+        
+        /* Map Section - UPDATED */
+        .map-section {
+            margin: 4rem 0;
+        }
+        
+        .map-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            display: block;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        }
+        
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-brown);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.4);
+            background: var(--accent-green);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            padding: 3rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary-beige);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .contact-grid {
+                gap: 2rem;
+            }
+            
+            .contact-info {
+                padding: 2rem;
+            }
+            
+            .hours-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .contact-section {
+                padding: 60px 0;
+            }
+            
+            .map-container iframe {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .map-container iframe {
+                height: 300px;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-display text-2xl font-bold text-primary-brown">
+                    <a href="index.html">El Pacha</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="menu.html" class="nav-link">Menu</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="contact.html" class="nav-link active">Contact</a>
+                    <a href="reservation.html" class="nav-link">Reservations</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-primary-brown" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div class="md:hidden hidden mt-4 pb-4" id="mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="menu.html" class="nav-link">Menu</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="contact.html" class="nav-link active">Contact</a>
+                    <a href="reservation.html" class="nav-link">Reservations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content container mx-auto px-6">
+            <h1 class="hero-title font-display">Contact Us</h1>
+            <p class="hero-subtitle">Get in Touch with El Pacha</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section container mx-auto px-6">
+        <h2 class="section-title font-display">Contact Information</h2>
+        <p class="section-subtitle">
+            We look forward to welcoming you to El Pacha Restaurant. Find our location, contact details, and opening hours below.
+        </p>
+        
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Location</h4>
+                        <p>RJQM+494, Sousse</p>
+                        <a href="https://www.google.com/maps/place/El+Pacha+Restaurant/@35.837768,10.630249,17z/data=!3m1!4b1!4m6!3m5!1s0x1302759cf6bfc9c1:0x4bf7f51e899f11f3!8m2!3d35.837768!4d10.6328235!16s%2Fg%2F11v0v8v7_9?entry=ttu" 
+                           target="_blank" 
+                           class="text-primary-brown hover:underline">
+                            View on Google Maps
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Phone</h4>
+                        <a href="tel:+21623553443">+216 23 553 443</a>
+                        <p>Call us for reservations and inquiries</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Email</h4>
+                        <p>info@elpacha-restaurant.com</p>
+                        <p>For general inquiries and feedback</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-facebook"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Facebook</h4>
+                        <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
+                            Restaurant le Becha
+                        </a>
+                        <p>Follow us for updates and special offers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opening Hours Section -->
+    <section class="hours-section">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title font-display">Opening Hours</h2>
+            
+            <div class="hours-grid">
+                <div class="hours-card">
+                    <div class="hours-day">Monday</div>
+                    <div class="hours-time">10 AM – 11:30 PM</div>
+                </div>
+                
+                <div class="hours-card">
+                    <div class="hours-day">Tuesday</div>
+                    <div class="hours-time">10 AM – 12 AM</div>
+                </div>
+                
+                <div class="hours-card">
+                    <div class="hours-day">Wednesday</div>
+                    <div class="hours-time">10 AM – 12 AM</div>
+                </div>
+                
+                <div class="hours-card">
+                    <div class="hours-day">Thursday</div>
+                    <div class="hours-time">10 AM – 12 AM</div>
+                </div>
+                
+                <div class="hours-card">
+                    <div class="hours-day">Friday</div>
+                    <div class="hours-time">10 AM – 11:30 PM</div>
+                </div>
+                
+                <div class="hours-card">
+                    <div class="hours-day">Saturday</div>
+                    <div class="hours-time">10 AM – 12 AM</div>
+                </div>
+                
+                <div class="hours-card">
+                    <div class="hours-day">Sunday</div>
+                    <div class="hours-time">11:30 AM – 12 AM</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section - UPDATED WITH WORKING MAP -->
+    <section class="map-section container mx-auto px-6">
+        <h2 class="section-title font-display">Find Us</h2>
+        
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.4581454321783!2d10.630248947581196!3d35.83776803517924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1302759cf6bfc9c1%3A0x4bf7f51e899f11f3!2sEl%20Pacha%20Restaurant!5e0!3m2!1sen!2stn!4v1761640394483!5m2!1sen!2stn" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+        
+        <div class="text-center mt-8">
+            <div class="inline-flex flex-col items-center space-y-2">
+                <p class="text-lg font-semibold">RJQM+494, Sousse</p>
+                <p class="text-gray-600">Phone: +216 23 553 443</p>
+                <a href="https://www.google.com/maps/place/El+Pacha+Restaurant/@35.837768,10.630249,17z/data=!3m1!4b1!4m6!3m5!1s0x1302759cf6bfc9c1:0x4bf7f51e899f11f3!8m2!3d35.837768!4d10.6328235!16s%2Fg%2F11v0v8v7_9?entry=ttu" 
+                   target="_blank" 
+                   class="btn btn-primary mt-4">
+                    <i class="fas fa-directions mr-2"></i>Get Directions
+                </a>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank" class="social-link">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="tel:+21623553443" class="social-link">
+                    <i class="fas fa-phone"></i>
+                </a>
+                <a href="https://www.google.com/maps/place/El+Pacha+Restaurant/@35.837768,10.630249,17z/data=!3m1!4b1!4m6!3m5!1s0x1302759cf6bfc9c1:0x4bf7f51e899f11f3!8m2!3d35.837768!4d10.6328235!16s%2Fg%2F11v0v8v7_9?entry=ttu" target="_blank" class="social-link">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>El Pacha Restaurant</h3>
+                    <p>A Culinary Experience in Sousse</p>
+                    <p>RJQM+494, Sousse</p>
+                    <p>Phone: +216 23 553 443</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Opening Hours</h3>
+                    <p>Monday: 10 AM – 11:30 PM</p>
+                    <p>Tuesday - Thursday: 10 AM – 12 AM</p>
+                    <p>Friday: 10 AM – 11:30 PM</p>
+                    <p>Saturday: 10 AM – 12 AM</p>
+                    <p>Sunday: 11:30 AM – 12 AM</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <a href="reservation.html">Make a Reservation</a>
+                    <a href="menu.html">View Our Menu</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for mobile menu and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Fade in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all sections
+            document.querySelectorAll('.contact-section, .hours-section, .map-section').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

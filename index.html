@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Pacha Restaurant - A Culinary Experience in Sousse</title>
+    <meta name="description" content="Welcome to El Pacha Restaurant in Sousse. Experience fine dining with our varied menu in both restaurant and lounge-style rooms.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.js"></script>
+    <link href="https://unpkg.com/splitting@1.0.6/dist/splitting.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-brown: #8B4513;
+            --secondary-beige: #F5F5DC;
+            --accent-green: #6B8E23;
+            --text-dark: #2C1810;
+            --text-light: #FFFFFF;
+            --background: #FEFEFE;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Navigation Styles */
+        .navbar {
+            background: rgba(254, 254, 254, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(254, 254, 254, 0.98);
+            box-shadow: 0 4px 20px rgba(139, 69, 19, 0.1);
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-brown);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-brown);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(245, 245, 220, 0.2) 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('resources/unnamed (9).webp');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3) 0%, rgba(245, 245, 220, 0.1) 100%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .hero-description {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-beige);
+            color: var(--primary-brown);
+            border: 2px solid var(--primary-brown);
+            margin-left: 1rem;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-brown);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+        
+        /* Video Gallery - PORTRAIT FOR TIKTOK VIDEOS */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .video-item {
+            position: relative;
+            aspect-ratio: 9/16; /* TikTok portrait ratio */
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .main-video {
+            aspect-ratio: 9/16; /* TikTok portrait ratio */
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.3);
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-light);
+            text-align: center;
+            width: 100%;
+            z-index: 2;
+        }
+        
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .play-button i {
+            font-size: 2rem;
+            margin-left: 4px;
+        }
+        
+        /* Custom Video Thumbnail Styling */
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .video-thumbnail-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .video-item:hover .video-thumbnail-overlay {
+            background: linear-gradient(0deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+        }
+        
+        /* Cloudinary Video Styling - FIXED */
+        .cloudinary-video {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            border: none;
+            display: none;
+            object-fit: cover;
+        }
+        
+        .video-playing .cloudinary-video {
+            display: block;
+        }
+        
+        .video-playing .video-thumbnail,
+        .video-playing .video-thumbnail-overlay,
+        .video-playing .video-placeholder {
+            display: none;
+        }
+        
+        /* Featured Dishes - IMPROVED WITH NUMBERED SIGNATURE DISHES */
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .dish-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .dish-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.2);
+        }
+        
+        .dish-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .dish-card:hover .dish-image {
+            transform: scale(1.05);
+        }
+        
+        .dish-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .dish-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--primary-brown);
+        }
+        
+        .dish-description {
+            color: var(--text-dark);
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .dish-cta {
+            display: inline-block;
+            background: var(--primary-brown);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .dish-cta:hover {
+            background: var(--accent-green);
+            transform: translateY(-2px);
+        }
+        
+        /* Modal for Dish Images */
+        .dish-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .dish-modal-content {
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+        }
+        
+        .dish-modal-img-container {
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .dish-modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .dish-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .dish-modal-close:hover {
+            color: var(--secondary-beige);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Story Section */
+        .story-section {
+            background: linear-gradient(135deg, var(--secondary-beige) 0%, rgba(139, 69, 19, 0.05) 100%);
+        }
+        
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+        
+        .story-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+        }
+        
+        /* Map Section */
+        .map-section {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05) 0%, var(--secondary-beige) 100%);
+        }
+        
+        .map-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            display: block;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            padding: 3rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary-beige);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 0 1rem;
+            }
+            
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+            
+            .story-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .video-item {
+                max-width: 300px;
+            }
+            
+            .main-video {
+                max-width: 300px;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-container iframe {
+                height: 350px;
+            }
+            
+            .dish-modal-img-container {
+                max-width: 95%;
+            }
+            
+            .dish-modal-close {
+                top: 10px;
+                right: 15px;
+                font-size: 2rem;
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .video-item {
+                max-width: 280px;
+            }
+            
+            .main-video {
+                max-width: 280px;
+            }
+            
+            .play-button {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .play-button i {
+                font-size: 1.5rem;
+            }
+            
+            .map-container iframe {
+                height: 300px;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-display text-2xl font-bold text-primary-brown">
+                    El Pacha
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="menu.html" class="nav-link">Menu</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="reservation.html" class="nav-link">Reservations</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-primary-brown" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div class="md:hidden hidden mt-4 pb-4" id="mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="menu.html" class="nav-link">Menu</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="reservation.html" class="nav-link">Reservations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero flex items-center justify-center">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content container mx-auto px-6">
+            <h1 class="hero-title font-display">El Pacha Restaurant</h1>
+            <div class="hero-subtitle" id="typed-text"></div>
+            <p class="hero-description">
+                Welcome to El Pacha Restaurant located in Sousse. The restaurant has two rooms, 
+                one restaurant-style and the other lounge-style, as well as a varied menu.
+            </p>
+            <div class="hero-buttons">
+                <a href="menu.html" class="btn btn-primary">View Our Menu</a>
+                <a href="reservation.html" class="btn btn-secondary">Book a Table</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Gallery Section - ALL 4 VIDEOS WITH RESOURCES FOLDER -->
+    <section class="section container mx-auto px-6">
+        <h2 class="section-title font-display">Video Gallery</h2>
+        <p class="section-subtitle">
+            Experience the ambiance and culinary artistry of El Pacha through our video collection
+        </p>
+        
+        <div class="video-grid">
+            <!-- Video 1 - Restaurant Tour -->
+            <div class="video-item main-video" id="main-video-player">
+                <!-- VIDEO 1 THUMBNAIL: Replace "restaurant-tour.jpg" with your image -->
+                <img src="resources/unnamed (6).webp" 
+                     alt="Restaurant Video Thumbnail" 
+                     class="video-thumbnail">
+                
+                <div class="video-thumbnail-overlay">
+                    <div class="video-placeholder">
+                        <div class="play-button" onclick="playVideo('main-video-player', 'cloudinary-video-1')">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Restaurant Tour</h3>
+                        <p style="font-size: 1rem;">Explore our elegant dining spaces</p>
+                    </div>
+                </div>
+                
+                <video
+                    id="cloudinary-video-1"
+                    class="cloudinary-video"
+                    controls
+                    playsinline
+                    poster="resources/restaurant-tour.jpg">
+                    <source src="https://res.cloudinary.com/dyvvabtmo/video/upload/vc_auto/Snaptik_7462802373002415365_Hd_dxezme.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <!-- Video 2 - Culinary Journey -->
+            <div class="video-item main-video" id="culinary-video-player">
+                <!-- VIDEO 2 THUMBNAIL: Replace "culinary-journey.jpg" with your image -->
+                <img src="resources/unnamed (7).webp" 
+                     alt="Culinary Journey" 
+                     class="video-thumbnail">
+                
+                <div class="video-thumbnail-overlay">
+                    <div class="video-placeholder">
+                        <div class="play-button" onclick="playVideo('culinary-video-player', 'cloudinary-video-2')">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Culinary Journey</h3>
+                        <p style="font-size: 1rem;">Behind the scenes in our kitchen</p>
+                    </div>
+                </div>
+                
+                <video
+                    id="cloudinary-video-2"
+                    class="cloudinary-video"
+                    controls
+                    playsinline
+                    poster="resources/culinary-journey.jpg">
+                    <source src="https://res.cloudinary.com/dyvvabtmo/video/upload/vc_auto/snaptik_7462414810953600261_hd_w2mltq.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <!-- Video 3 - Signature Dishes -->
+            <div class="video-item main-video" id="signature-video-player">
+                <!-- VIDEO 3 THUMBNAIL: Replace "signature-dishes.jpg" with your image -->
+                <img src="resources/unnamed.webp" 
+                     alt="Signature Dishes" 
+                     class="video-thumbnail">
+                
+                <div class="video-thumbnail-overlay">
+                    <div class="video-placeholder">
+                        <div class="play-button" onclick="playVideo('signature-video-player', 'cloudinary-video-3')">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Signature Dishes</h3>
+                        <p style="font-size: 1rem;">Our most celebrated creations</p>
+                    </div>
+                </div>
+                
+                <video
+                    id="cloudinary-video-3"
+                    class="cloudinary-video"
+                    controls
+                    playsinline
+                    poster="resources/signature-dishes.jpg">
+                    <source src="https://res.cloudinary.com/dyvvabtmo/video/upload/vc_auto/snaptik_7462434604264262918_hd_pr3gni.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <!-- Video 4 - Customer Experience -->
+            <div class="video-item main-video" id="customer-video-player">
+                <!-- VIDEO 4 THUMBNAIL: Replace "customer-experience.jpg" with your image -->
+                <img src="resources/unnamed (9).webp" 
+                     alt="Customer Experience" 
+                     class="video-thumbnail">
+                
+                <div class="video-thumbnail-overlay">
+                    <div class="video-placeholder">
+                        <div class="play-button" onclick="playVideo('customer-video-player', 'cloudinary-video-4')">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Customer Experience</h3>
+                        <p style="font-size: 1rem;">Hear from our valued guests</p>
+                    </div>
+                </div>
+                
+                <video
+                    id="cloudinary-video-4"
+                    class="cloudinary-video"
+                    controls
+                    playsinline
+                    poster="resources/customer-experience.jpg">
+                    <source src="https://res.cloudinary.com/dyvvabtmo/video/upload/vc_auto/snaptik_7462482000067235077_hd_agnrjw.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Dishes Section - IMPROVED WITH NUMBERED SIGNATURE DISHES -->
+    <section class="section container mx-auto px-6">
+        <h2 class="section-title font-display">Signature Dishes</h2>
+        <p class="section-subtitle">
+            Discover our chef's most celebrated creations
+        </p>
+        
+        <div class="dishes-grid">
+            <div class="dish-card" data-index="0">
+                <img src="resources/1.jpg" alt="First Signature Dish" class="dish-image">
+                <div class="dish-content">
+                    <h3 class="dish-title">First Signature Dish</h3>
+                    <p class="dish-description">An exquisite creation showcasing our chef's culinary expertise</p>
+                    <a href="menu.html" class="dish-cta">View Details</a>
+                </div>
+            </div>
+            
+            <div class="dish-card" data-index="1">
+                <img src="resources/2.jpg" alt="Second Signature Dish" class="dish-image">
+                <div class="dish-content">
+                    <h3 class="dish-title">Second Signature Dish</h3>
+                    <p class="dish-description">A masterpiece of flavors and presentation</p>
+                    <a href="menu.html" class="dish-cta">View Details</a>
+                </div>
+            </div>
+            
+            <div class="dish-card" data-index="2">
+                <img src="resources/3.jpg" alt="Third Signature Dish" class="dish-image">
+                <div class="dish-content">
+                    <h3 class="dish-title">Third Signature Dish</h3>
+                    <p class="dish-description">A harmonious blend of traditional and modern cuisine</p>
+                    <a href="menu.html" class="dish-cta">View Details</a>
+                </div>
+            </div>
+            
+            <div class="dish-card" data-index="3">
+                <img src="resources/5.jpg" alt="Fourth Signature Dish" class="dish-image">
+                <div class="dish-content">
+                    <h3 class="dish-title">Fourth Signature Dish</h3>
+                    <p class="dish-description">An unforgettable culinary experience</p>
+                    <a href="menu.html" class="dish-cta">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Dish Images -->
+    <div class="dish-modal" id="dishModal">
+        <div class="dish-modal-content">
+            <span class="dish-modal-close" id="dishModalClose">&times;</span>
+            <div class="dish-modal-img-container">
+                <img src="" alt="" class="dish-modal-img" id="dishModalImage">
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Section -->
+    <section class="story-section section">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title font-display">Our Story</h2>
+            
+            <div class="story-content">
+                <div class="story-text">
+                    <p class="mb-4">
+                        Welcome to El Pacha Restaurant, where culinary excellence meets Tunisian hospitality 
+                        in the heart of Sousse. Our restaurant features two distinct dining experiences - 
+                        a formal restaurant-style room and a relaxed lounge-style area.
+                    </p>
+                    <p class="mb-4">
+                        We are dedicated to providing an unforgettable dining experience with a perfect 
+                        blend of traditional Tunisian flavors and contemporary culinary techniques. 
+                        Our varied menu caters to all tastes, from fresh seafood to premium meats.
+                    </p>
+                    <p>
+                        Whether you're celebrating a special occasion or enjoying a casual meal, 
+                        El Pacha Restaurant offers the perfect ambiance for every dining experience.
+                    </p>
+                    
+                    <a href="about.html" class="btn btn-primary mt-6 inline-block">Learn More About Us</a>
+                </div>
+                
+                <div>
+                    <img src="resources/unnamed (12).webp" alt="Restaurant Interior" class="story-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section with Google Maps -->
+    <section class="map-section section">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title font-display">Our Location</h2>
+            <p class="section-subtitle">
+                Visit us at El Pacha Restaurant in the heart of Sousse
+            </p>
+            
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.4581454321783!2d10.630248947581196!3d35.83776803517924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1302759cf6bfc9c1%3A0x4bf7f51e899f11f3!2sEl%20Pacha%20Restaurant!5e0!3m2!1sen!2stn!4v1761640394483!5m2!1sen!2stn" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            
+            <div class="text-center mt-8">
+                <div class="inline-flex flex-col items-center space-y-2">
+                    <p class="text-lg font-semibold">RJQM+494, Sousse</p>
+                    <p class="text-gray-600">Phone: +216 23 553 443</p>
+                    <a href="https://maps.google.com/?q=El+Pacha+Restaurant,Sousse" 
+                       target="_blank" 
+                       class="btn btn-primary mt-4">
+                        <i class="fas fa-directions mr-2"></i>Get Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>El Pacha Restaurant</h3>
+                    <p>A Culinary Experience in Sousse</p>
+                    <p>RJQM+494, Sousse</p>
+                    <p>Phone: +216 23 553 443</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Opening Hours</h3>
+                    <p>Monday: 10 AM – 11:30 PM</p>
+                    <p>Tuesday - Thursday: 10 AM – 12 AM</p>
+                    <p>Friday: 10 AM – 11:30 PM</p>
+                    <p>Saturday: 10 AM – 12 AM</p>
+                    <p>Sunday: 11:30 AM – 12 AM</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <a href="contact.html">Contact Information</a>
+                    <a href="reservation.html">Make a Reservation</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Video Play Function
+        function playVideo(containerId, videoId) {
+            const videoContainer = document.getElementById(containerId);
+            const videoElement = document.getElementById(videoId);
+            
+            // Pause all other videos
+            pauseOtherVideos(videoId);
+            
+            // Add playing class to show video and hide thumbnail
+            videoContainer.classList.add('video-playing');
+            
+            // Play the video
+            videoElement.play().catch(error => {
+                console.log('Video play failed:', error);
+                // Fallback: if autoplay is blocked, show controls and let user play manually
+                videoElement.controls = true;
+            });
+        }
+
+        // Pause all other videos when one is playing
+        function pauseOtherVideos(currentVideoId) {
+            const allVideos = document.querySelectorAll('.cloudinary-video');
+            allVideos.forEach(video => {
+                if (video.id !== currentVideoId && !video.paused) {
+                    video.pause();
+                    // Reset to thumbnail view for other videos
+                    const container = video.closest('.video-item');
+                    if (container && container.classList.contains('video-playing')) {
+                        container.classList.remove('video-playing');
+                    }
+                }
+            });
+        }
+
+        // Dish Modal functionality
+        const dishModal = document.getElementById('dishModal');
+        const dishModalImage = document.getElementById('dishModalImage');
+        const dishModalClose = document.getElementById('dishModalClose');
+        const dishCards = document.querySelectorAll('.dish-card');
+        
+        // Open modal when dish card is clicked
+        dishCards.forEach((card) => {
+            card.addEventListener('click', () => {
+                const imgSrc = card.querySelector('img').src;
+                dishModalImage.src = imgSrc;
+                dishModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        function closeDishModal() {
+            dishModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Event listeners for modal controls
+        dishModalClose.addEventListener('click', closeDishModal);
+        
+        // Close modal when clicking outside the image
+        dishModal.addEventListener('click', (e) => {
+            if (e.target === dishModal) {
+                closeDishModal();
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (dishModal.style.display === 'block' && e.key === 'Escape') {
+                closeDishModal();
+            }
+        });
+
+        // Simple JavaScript for mobile menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Typed.js animation
+            if (document.getElementById('typed-text')) {
+                new Typed('#typed-text', {
+                    strings: ['A Culinary Experience', 'Fine Dining in Sousse', 'Two Unique Atmospheres'],
+                    typeSpeed: 50,
+                    backSpeed: 30,
+                    backDelay: 2000,
+                    loop: true
+                });
+            }
+            
+            // Fade in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all sections
+            document.querySelectorAll('.section, .hero-title, .hero-subtitle, .hero-description').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

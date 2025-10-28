@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - El Pacha Restaurant</title>
+    <meta name="description" content="Browse our photo gallery showcasing the elegant dining spaces, delicious dishes, and memorable moments at El Pacha Restaurant in Sousse.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --primary-brown: #8B4513;
+            --secondary-beige: #F5F5DC;
+            --accent-green: #6B8E23;
+            --text-dark: #2C1810;
+            --text-light: #FFFFFF;
+            --background: #FEFEFE;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Navigation Styles */
+        .navbar {
+            background: rgba(254, 254, 254, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(254, 254, 254, 0.98);
+            box-shadow: 0 4px 20px rgba(139, 69, 19, 0.1);
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-brown);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-brown);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-brown);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(245, 245, 220, 0.2) 100%);
+            height: 50vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://kimi-web-img.moonshot.cn/img/www.homeaccentstoday.com/c0a41d7147817afdab7f67dd8867f5eb5db2e208.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.4) 0%, rgba(245, 245, 220, 0.2) 100%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 300;
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-brown);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+        
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.1);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.2);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.7) 0%, rgba(245, 245, 220, 0.3) 100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-icon {
+            font-size: 2.5rem;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-icon {
+            transform: scale(1);
+        }
+        
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .lightbox-content {
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+        }
+        
+        .lightbox-img-container {
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--secondary-beige);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+            pointer-events: none;
+        }
+        
+        .lightbox-nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 1.5rem;
+            pointer-events: all;
+        }
+        
+        .lightbox-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            padding: 3rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary-beige);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .gallery-section {
+                padding: 60px 0;
+            }
+            
+            .lightbox-img-container {
+                max-width: 95%;
+            }
+            
+            .lightbox-nav {
+                padding: 0 10px;
+            }
+            
+            .lightbox-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .lightbox-close {
+                top: 10px;
+                right: 15px;
+                font-size: 2rem;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-display text-2xl font-bold text-primary-brown">
+                    <a href="index.html">El Pacha</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="menu.html" class="nav-link">Menu</a>
+                    <a href="gallery.html" class="nav-link active">Gallery</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="reservation.html" class="nav-link">Reservations</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-primary-brown" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div class="md:hidden hidden mt-4 pb-4" id="mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="menu.html" class="nav-link">Menu</a>
+                    <a href="gallery.html" class="nav-link active">Gallery</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="reservation.html" class="nav-link">Reservations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content container mx-auto px-6">
+            <h1 class="hero-title font-display">Photo Gallery</h1>
+            <p class="hero-subtitle">Visual Journey Through El Pacha</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section container mx-auto px-6">
+        <h2 class="section-title font-display">Our Gallery</h2>
+        <p class="section-subtitle">
+            Explore the visual story of El Pacha Restaurant through our collection of photographs
+        </p>
+        
+        <!-- Gallery Grid -->
+        <div class="gallery-grid">
+            <!-- Replace these with your actual images -->
+            <div class="gallery-item" data-index="0">
+                <img src="resources/7.jpg" alt="Restaurant Interior" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="1">
+                <img src="resources/8.jpg" alt="Seafood Platter" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="2">
+                <img src="resources/9.jpg" alt="Lounge Area" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="3">
+                <img src="resources/unnamed (3).webp" alt="Gourmet Pasta" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="4">
+                <img src="resources/unnamed (5).webp" alt="Restaurant Ambiance" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="5">
+                <img src="resources/unnamed (6).webp" alt="Grilled Meat" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="6">
+                <img src="resources/unnamed (7).webp" alt="Restaurant Design" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="7">
+                <img src="resources/unnamed (9).webp" alt="Artisanal Appetizer" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="8">
+                <img src="resources/unnamed (12).webp" alt="Fine Dining Setup" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-index="9">
+                <img src="resources/unnamed.webp" alt="Special Occasion" class="gallery-image">
+                <div class="gallery-overlay">
+                    <div class="gallery-icon">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" id="lightboxClose">&times;</span>
+            <div class="lightbox-img-container">
+                <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            </div>
+            <div class="lightbox-nav">
+                <button class="lightbox-nav-btn" id="lightboxPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="lightbox-nav-btn" id="lightboxNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>El Pacha Restaurant</h3>
+                    <p>A Culinary Experience in Sousse</p>
+                    <p>RJQM+494, Sousse</p>
+                    <p>Phone: +216 23 553 443</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Opening Hours</h3>
+                    <p>Monday: 10 AM – 11:30 PM</p>
+                    <p>Tuesday - Thursday: 10 AM – 12 AM</p>
+                    <p>Friday: 10 AM – 11:30 PM</p>
+                    <p>Saturday: 10 AM – 12 AM</p>
+                    <p>Sunday: 11:30 AM – 12 AM</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                    <a href="contact.html">Contact Information</a>
+                    <a href="reservation.html">Make a Reservation</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Add fade-in animation to gallery items
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            galleryItems.forEach(item => {
+                item.style.opacity = 0;
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(item);
+            });
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        let currentImageIndex = 0;
+        
+        // Open lightbox when gallery item is clicked
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentImageIndex = index;
+                openLightbox();
+            });
+        });
+        
+        function openLightbox() {
+            const imgSrc = galleryItems[currentImageIndex].querySelector('img').src;
+            lightboxImage.src = imgSrc;
+            lightbox.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+            const imgSrc = galleryItems[currentImageIndex].querySelector('img').src;
+            lightboxImage.src = imgSrc;
+        }
+        
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+            const imgSrc = galleryItems[currentImageIndex].querySelector('img').src;
+            lightboxImage.src = imgSrc;
+        }
+        
+        // Event listeners for lightbox controls
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxNext.addEventListener('click', showNextImage);
+        lightboxPrev.addEventListener('click', showPrevImage);
+        
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display === 'block') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

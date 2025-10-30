@@ -212,9 +212,43 @@
             font-weight: 300;
         }
         
+        /* Menu Tabs */
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+            gap: 1rem;
+        }
+        
+        .menu-tab {
+            padding: 1rem 2rem;
+            background: var(--secondary-beige);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--primary-brown);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .menu-tab.active {
+            background: var(--primary-brown);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        .menu-tab:hover:not(.active) {
+            background: rgba(139, 69, 19, 0.1);
+            transform: translateY(-2px);
+        }
+        
         /* Menu Gallery */
         .menu-gallery {
-            padding: 60px 0;
+            padding: 20px 0 60px;
         }
         
         .gallery-title {
@@ -473,6 +507,17 @@
         
         /* Mobile Styles */
         @media (max-width: 768px) {
+            .menu-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .menu-tab {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
             .gallery-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
@@ -507,6 +552,24 @@
             .modal-img-container {
                 max-width: 95%;
             }
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .placeholder-text {
+            text-align: center;
+            color: var(--text-dark);
+            opacity: 0.7;
+            margin-top: 2rem;
+            font-style: italic;
         }
     </style>
 </head>
@@ -597,38 +660,143 @@
         </div>
     </section>
 
+    <!-- Menu Tabs -->
+    <div class="container mx-auto px-6">
+        <div class="menu-tabs">
+            <button class="menu-tab active" data-tab="french-menu">
+                <i class="fas fa-flag"></i>
+                <span data-i18n="menu.tabs.french">French Menu</span>
+            </button>
+            <button class="menu-tab" data-tab="english-menu">
+                <i class="fas fa-flag-usa"></i>
+                <span data-i18n="menu.tabs.english">English Menu</span>
+            </button>
+        </div>
+    </div>
+
     <!-- Menu Gallery -->
     <section class="menu-gallery">
         <div class="container mx-auto px-6">
             <h2 class="gallery-title font-display" data-i18n="menu.gallery.title">Our Menu Selection</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item" data-menu="1">
-                    <img src="resources/unnamed (2).webp" alt="Menu 1" class="gallery-img">
-                    <div class="gallery-overlay">
-                        <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.menu1">Menu 1</h3>
+            
+            <!-- French Menu Content -->
+            <div class="tab-content active" id="french-menu">
+                <div class="gallery-grid">
+                    <!-- French Menu Page 1 -->
+                    <div class="gallery-item" data-menu="fr1">
+                        <!-- REPLACE THIS SRC WITH YOUR FRENCH MENU IMAGE 1 -->
+                        <img src="menu fr/S021025011_2510301449001_page-0001.jpg" alt="French Menu Page 1" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.fr1">French Menu Page 1</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- French Menu Page 2 -->
+                    <div class="gallery-item" data-menu="fr2">
+                        <!-- REPLACE THIS SRC WITH YOUR FRENCH MENU IMAGE 2 -->
+                        <img src="menu fr/S021025011_2510301449002_page-0001.jpg" alt="French Menu Page 2" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.fr2">French Menu Page 2</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- French Menu Page 3 -->
+                    <div class="gallery-item" data-menu="fr3">
+                        <!-- REPLACE THIS SRC WITH YOUR FRENCH MENU IMAGE 3 -->
+                        <img src="menu fr/S021025011_2510301450000_page-0001.jpg" alt="French Menu Page 3" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.fr3">French Menu Page 3</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- French Menu Page 4 -->
+                    <div class="gallery-item" data-menu="fr4">
+                        <!-- REPLACE THIS SRC WITH YOUR FRENCH MENU IMAGE 4 -->
+                        <img src="menu fr/S021025011_2510301450001_page-0001.jpg" alt="French Menu Page 4" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.fr4">French Menu Page 4</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- French Menu Page 5 -->
+                    <div class="gallery-item" data-menu="fr5">
+                        <!-- REPLACE THIS SRC WITH YOUR FRENCH MENU IMAGE 5 -->
+                        <img src="menu fr/S021025011_2510301450002_page-0001.jpg" alt="French Menu Page 5" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.fr5">French Menu Page 5</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- French Menu Page 6 -->
+                    <div class="gallery-item" data-menu="fr6">
+                        <!-- REPLACE THIS SRC WITH YOUR FRENCH MENU IMAGE 6 -->
+                        <img src="menu fr/S021025011_2510301451000_page-0001.jpg" alt="French Menu Page 6" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.fr6">French Menu Page 6</h3>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="gallery-item" data-menu="2">
-                    <img src="resources/unnamed (13).webp" alt="Menu 2" class="gallery-img">
-                    <div class="gallery-overlay">
-                        <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.menu2">Menu 2</h3>
+                <p class="placeholder-text" data-i18n="menu.placeholder.fr">French menu images will be added here</p>
+            </div>
+            
+            <!-- English Menu Content -->
+            <div class="tab-content" id="english-menu">
+                <div class="gallery-grid">
+                    <!-- English Menu Page 1 -->
+                    <div class="gallery-item" data-menu="en1">
+                        <!-- REPLACE THIS SRC WITH YOUR ENGLISH MENU IMAGE 1 -->
+                        <img src="menu en/S021025011_2510301451002_page-0001.jpg" alt="English Menu Page 1" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.en1">English Menu Page 1</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- English Menu Page 2 -->
+                    <div class="gallery-item" data-menu="en2">
+                        <!-- REPLACE THIS SRC WITH YOUR ENGLISH MENU IMAGE 2 -->
+                        <img src="menu en/S021025011_2510301451003_page-0001.jpg" alt="English Menu Page 2" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.en2">English Menu Page 2</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- English Menu Page 3 -->
+                    <div class="gallery-item" data-menu="en3">
+                        <!-- REPLACE THIS SRC WITH YOUR ENGLISH MENU IMAGE 3 -->
+                        <img src="menu en/S021025011_2510301523000_page-0001.jpg" alt="English Menu Page 3" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.en3">English Menu Page 3</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- English Menu Page 4 -->
+                    <div class="gallery-item" data-menu="en4">
+                        <!-- REPLACE THIS SRC WITH YOUR ENGLISH MENU IMAGE 4 -->
+                        <img src="menu en/S021025011_2510301523001_page-0001.jpg" alt="English Menu Page 4" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.en4">English Menu Page 4</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- English Menu Page 5 -->
+                    <div class="gallery-item" data-menu="en5">
+                        <!-- REPLACE THIS SRC WITH YOUR ENGLISH MENU IMAGE 5 -->
+                        <img src="menu en/S021025011_2510301523002_page-0001.jpg" alt="English Menu Page 5" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.en5">English Menu Page 5</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- English Menu Page 6 -->
+                    <div class="gallery-item" data-menu="en6">
+                        <!-- REPLACE THIS SRC WITH YOUR ENGLISH MENU IMAGE 6 -->
+                        <img src="menu en/S021025011_2510301523003_page-0001.jpg" alt="English Menu Page 6" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.en6">English Menu Page 6</h3>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="gallery-item" data-menu="3">
-                    <img src="resources/unnamed (8).webp" alt="Menu 3" class="gallery-img">
-                    <div class="gallery-overlay">
-                        <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.menu3">Menu 3</h3>
-                    </div>
-                </div>
-                
-                <div class="gallery-item" data-menu="4">
-                    <img src="resources/111.webp" alt="Menu 4" class="gallery-img">
-                    <div class="gallery-overlay">
-                        <h3 class="gallery-item-title font-display" data-i18n="menu.gallery.menu4">Menu 4</h3>
-                    </div>
-                </div>
+                <p class="placeholder-text" data-i18n="menu.placeholder.en">English menu images will be added here</p>
             </div>
         </div>
     </section>
@@ -716,10 +884,22 @@
                 "menu.hero.title": "MENU",
                 "menu.hero.subtitle": "Discover Our Culinary Creations",
                 "menu.gallery.title": "Our Menu Selection",
-                "menu.gallery.menu1": "Menu 1",
-                "menu.gallery.menu2": "Menu 2",
-                "menu.gallery.menu3": "Menu 3",
-                "menu.gallery.menu4": "Menu 4",
+                "menu.tabs.french": "French Menu",
+                "menu.tabs.english": "English Menu",
+                "menu.gallery.fr1": "French Menu Page 1",
+                "menu.gallery.fr2": "French Menu Page 2",
+                "menu.gallery.fr3": "French Menu Page 3",
+                "menu.gallery.fr4": "French Menu Page 4",
+                "menu.gallery.fr5": "French Menu Page 5",
+                "menu.gallery.fr6": "French Menu Page 6",
+                "menu.gallery.en1": "English Menu Page 1",
+                "menu.gallery.en2": "English Menu Page 2",
+                "menu.gallery.en3": "English Menu Page 3",
+                "menu.gallery.en4": "English Menu Page 4",
+                "menu.gallery.en5": "English Menu Page 5",
+                "menu.gallery.en6": "English Menu Page 6",
+                "menu.placeholder.fr": "French menu images will be added here",
+                "menu.placeholder.en": "English menu images will be added here",
                 "menu.cta.title": "Ready to Experience El Pacha?",
                 "menu.cta.text": "Join us for an unforgettable dining experience. Reserve your table today and let us take you on a culinary journey.",
                 
@@ -757,10 +937,22 @@
                 "menu.hero.title": "MENU",
                 "menu.hero.subtitle": "Découvrez Nos Créations Culinaires",
                 "menu.gallery.title": "Notre Sélection de Menus",
-                "menu.gallery.menu1": "Menu 1",
-                "menu.gallery.menu2": "Menu 2",
-                "menu.gallery.menu3": "Menu 3",
-                "menu.gallery.menu4": "Menu 4",
+                "menu.tabs.french": "Menu Français",
+                "menu.tabs.english": "Menu Anglais",
+                "menu.gallery.fr1": "Menu Français Page 1",
+                "menu.gallery.fr2": "Menu Français Page 2",
+                "menu.gallery.fr3": "Menu Français Page 3",
+                "menu.gallery.fr4": "Menu Français Page 4",
+                "menu.gallery.fr5": "Menu Français Page 5",
+                "menu.gallery.fr6": "Menu Français Page 6",
+                "menu.gallery.en1": "Menu Anglais Page 1",
+                "menu.gallery.en2": "Menu Anglais Page 2",
+                "menu.gallery.en3": "Menu Anglais Page 3",
+                "menu.gallery.en4": "Menu Anglais Page 4",
+                "menu.gallery.en5": "Menu Anglais Page 5",
+                "menu.gallery.en6": "Menu Anglais Page 6",
+                "menu.placeholder.fr": "Les images du menu français seront ajoutées ici",
+                "menu.placeholder.en": "Les images du menu anglais seront ajoutées ici",
                 "menu.cta.title": "Prêt à Découvrir El Pacha?",
                 "menu.cta.text": "Rejoignez-nous pour une expérience culinaire inoubliable. Réservez votre table dès aujourd'hui et laissez-nous vous emmener dans un voyage gastronomique.",
                 
@@ -874,6 +1066,29 @@
             }
         });
 
+        // Tab functionality
+        function setupMenuTabs() {
+            const tabs = document.querySelectorAll('.menu-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to current tab and content
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Reset modal data
+                    currentMenuIndex = 0;
+                    menuItems = document.querySelectorAll(`#${tabId} .gallery-item`);
+                });
+            });
+        }
+
         // Add fade-in animation to gallery items
         document.addEventListener('DOMContentLoaded', function() {
             const galleryItems = document.querySelectorAll('.gallery-item');
@@ -896,6 +1111,9 @@
 
             // Initialize language system
             initLanguageSystem();
+            
+            // Initialize menu tabs
+            setupMenuTabs();
         });
 
         // Modal functionality for menu images
@@ -904,21 +1122,35 @@
         const closeModal = document.getElementById('closeModal');
         const prevBtn = document.getElementById('prevMenu');
         const nextBtn = document.getElementById('nextMenu');
-        const menuItems = document.querySelectorAll('.gallery-item');
-        
+        let menuItems = document.querySelectorAll('#french-menu .gallery-item');
         let currentMenuIndex = 0;
         
         // Open modal when menu item is clicked
-        menuItems.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                currentMenuIndex = index;
-                openModal();
+        function setupModalListeners() {
+            menuItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    currentMenuIndex = index;
+                    openModal();
+                });
             });
-        });
+        }
+        
+        // Initialize modal listeners
+        setupModalListeners();
         
         function openModal() {
             const imgSrc = menuItems[currentMenuIndex].querySelector('img').src;
+            const imgAlt = menuItems[currentMenuIndex].querySelector('img').alt;
             modalImg.src = imgSrc;
+            modalImg.alt = imgAlt;
+            modalImg.style.display = 'block';
+            
+            // Remove any placeholder if exists
+            const placeholder = document.querySelector('.modal-placeholder');
+            if (placeholder) {
+                placeholder.remove();
+            }
+            
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden'; // Prevent body scrolling
         }
@@ -930,14 +1162,12 @@
         
         function showNextMenu() {
             currentMenuIndex = (currentMenuIndex + 1) % menuItems.length;
-            const imgSrc = menuItems[currentMenuIndex].querySelector('img').src;
-            modalImg.src = imgSrc;
+            openModal();
         }
         
         function showPrevMenu() {
             currentMenuIndex = (currentMenuIndex - 1 + menuItems.length) % menuItems.length;
-            const imgSrc = menuItems[currentMenuIndex].querySelector('img').src;
-            modalImg.src = imgSrc;
+            openModal();
         }
         
         // Event listeners for modal controls
@@ -963,6 +1193,16 @@
                     showPrevMenu();
                 }
             }
+        });
+
+        // Update menu items when tab changes
+        document.querySelectorAll('.menu-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                menuItems = document.querySelectorAll(`#${tabId} .gallery-item`);
+                currentMenuIndex = 0;
+                setupModalListeners();
+            });
         });
     </script>
 </body>

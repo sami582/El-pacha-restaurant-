@@ -85,6 +85,81 @@
         .nav-link:hover::after {
             width: 100%;
         }
+
+        .nav-link.active {
+            color: var(--primary-brown);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--primary-brown);
+            color: var(--primary-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-btn:hover {
+            background: var(--primary-brown);
+            color: var(--text-light);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+            padding: 8px 0;
+            min-width: 120px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .lang-dropdown.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .lang-option {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-option:hover {
+            background: var(--secondary-beige);
+            color: var(--primary-brown);
+        }
+        
+        .lang-option.active {
+            background: var(--primary-brown);
+            color: var(--text-light);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         /* Hero Section */
         .hero {
@@ -634,17 +709,36 @@
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="font-display text-2xl font-bold text-primary-brown">
-                    El Pacha
+                    <a href="index.html">El Pacha</a>
                 </div>
                 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="menu.html" class="nav-link">Menu</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="reservation.html" class="nav-link">Reservations</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-link active" data-i18n="nav.home">Home</a>
+                    <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="menu.html" class="nav-link" data-i18n="nav.menu">Menu</a>
+                    <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="reservation.html" class="nav-link" data-i18n="nav.reservations">Reservations</a>
+                    
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="lang-btn" id="langToggle">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Mobile Menu Button -->
@@ -656,12 +750,31 @@
             <!-- Mobile Navigation -->
             <div class="md:hidden hidden mt-4 pb-4" id="mobile-menu">
                 <div class="flex flex-col space-y-4">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="menu.html" class="nav-link">Menu</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="reservation.html" class="nav-link">Reservations</a>
+                    <a href="index.html" class="nav-link active" data-i18n="nav.home">Home</a>
+                    <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="menu.html" class="nav-link" data-i18n="nav.menu">Menu</a>
+                    <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="reservation.html" class="nav-link" data-i18n="nav.reservations">Reservations</a>
+                    
+                    <!-- Mobile Language Switcher -->
+                    <div class="language-switcher pt-2">
+                        <button class="lang-btn w-full justify-center" id="mobileLangToggle">
+                            <i class="fas fa-globe"></i>
+                            <span id="mobileCurrentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown w-full" id="mobileLangDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -672,23 +785,23 @@
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content container mx-auto px-6">
-            <h1 class="hero-title font-display">El Pacha Restaurant</h1>
-            <div class="hero-subtitle" id="typed-text"></div>
-            <p class="hero-description">
+            <h1 class="hero-title font-display" data-i18n="home.hero.title">El Pacha Restaurant</h1>
+            <div class="hero-subtitle" id="typed-text" data-i18n="home.hero.subtitle">A Culinary Experience</div>
+            <p class="hero-description" data-i18n="home.hero.description">
                 Welcome to El Pacha Restaurant located in Sousse. The restaurant has two rooms, 
                 one restaurant-style and the other lounge-style, as well as a varied menu.
             </p>
             <div class="hero-buttons">
-                <a href="menu.html" class="btn btn-primary">View Our Menu</a>
-                <a href="reservation.html" class="btn btn-secondary">Book a Table</a>
+                <a href="menu.html" class="btn btn-primary" data-i18n="common.view_menu">View Our Menu</a>
+                <a href="reservation.html" class="btn btn-secondary" data-i18n="common.book_table">Book a Table</a>
             </div>
         </div>
     </section>
 
     <!-- Video Gallery Section - ALL 4 VIDEOS WITH RESOURCES FOLDER -->
     <section class="section container mx-auto px-6">
-        <h2 class="section-title font-display">Video Gallery</h2>
-        <p class="section-subtitle">
+        <h2 class="section-title font-display" data-i18n="home.video.title">Video Gallery</h2>
+        <p class="section-subtitle" data-i18n="home.video.subtitle">
             Experience the ambiance and culinary artistry of El Pacha through our video collection
         </p>
         
@@ -705,8 +818,8 @@
                         <div class="play-button" onclick="playVideo('main-video-player', 'cloudinary-video-1')">
                             <i class="fas fa-play"></i>
                         </div>
-                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Restaurant Tour</h3>
-                        <p style="font-size: 1rem;">Explore our elegant dining spaces</p>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;" data-i18n="home.video.tour.title">Restaurant Tour</h3>
+                        <p style="font-size: 1rem;" data-i18n="home.video.tour.description">Explore our elegant dining spaces</p>
                     </div>
                 </div>
                 
@@ -733,8 +846,8 @@
                         <div class="play-button" onclick="playVideo('culinary-video-player', 'cloudinary-video-2')">
                             <i class="fas fa-play"></i>
                         </div>
-                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Culinary Journey</h3>
-                        <p style="font-size: 1rem;">Behind the scenes in our kitchen</p>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;" data-i18n="home.video.culinary.title">Culinary Journey</h3>
+                        <p style="font-size: 1rem;" data-i18n="home.video.culinary.description">Behind the scenes in our kitchen</p>
                     </div>
                 </div>
                 
@@ -761,8 +874,8 @@
                         <div class="play-button" onclick="playVideo('signature-video-player', 'cloudinary-video-3')">
                             <i class="fas fa-play"></i>
                         </div>
-                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Signature Dishes</h3>
-                        <p style="font-size: 1rem;">Our most celebrated creations</p>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;" data-i18n="home.video.signature.title">Signature Dishes</h3>
+                        <p style="font-size: 1rem;" data-i18n="home.video.signature.description">Our most celebrated creations</p>
                     </div>
                 </div>
                 
@@ -789,8 +902,8 @@
                         <div class="play-button" onclick="playVideo('customer-video-player', 'cloudinary-video-4')">
                             <i class="fas fa-play"></i>
                         </div>
-                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Customer Experience</h3>
-                        <p style="font-size: 1rem;">Hear from our valued guests</p>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;" data-i18n="home.video.customer.title">Customer Experience</h3>
+                        <p style="font-size: 1rem;" data-i18n="home.video.customer.description">Hear from our valued guests</p>
                     </div>
                 </div>
                 
@@ -809,8 +922,8 @@
 
     <!-- Featured Dishes Section - IMPROVED WITH NUMBERED SIGNATURE DISHES -->
     <section class="section container mx-auto px-6">
-        <h2 class="section-title font-display">Signature Dishes</h2>
-        <p class="section-subtitle">
+        <h2 class="section-title font-display" data-i18n="home.dishes.title">Signature Dishes</h2>
+        <p class="section-subtitle" data-i18n="home.dishes.subtitle">
             Discover our chef's most celebrated creations
         </p>
         
@@ -818,36 +931,36 @@
             <div class="dish-card" data-index="0">
                 <img src="resources/1.jpg" alt="First Signature Dish" class="dish-image">
                 <div class="dish-content">
-                    <h3 class="dish-title">First Signature Dish</h3>
-                    <p class="dish-description">An exquisite creation showcasing our chef's culinary expertise</p>
-                    <a href="menu.html" class="dish-cta">View Details</a>
+                    <h3 class="dish-title" data-i18n="home.dishes.dish1.title">First Signature Dish</h3>
+                    <p class="dish-description" data-i18n="home.dishes.dish1.description">An exquisite creation showcasing our chef's culinary expertise</p>
+                    <a href="menu.html" class="dish-cta" data-i18n="home.dishes.view_details">View Details</a>
                 </div>
             </div>
             
             <div class="dish-card" data-index="1">
                 <img src="resources/2.jpg" alt="Second Signature Dish" class="dish-image">
                 <div class="dish-content">
-                    <h3 class="dish-title">Second Signature Dish</h3>
-                    <p class="dish-description">A masterpiece of flavors and presentation</p>
-                    <a href="menu.html" class="dish-cta">View Details</a>
+                    <h3 class="dish-title" data-i18n="home.dishes.dish2.title">Second Signature Dish</h3>
+                    <p class="dish-description" data-i18n="home.dishes.dish2.description">A masterpiece of flavors and presentation</p>
+                    <a href="menu.html" class="dish-cta" data-i18n="home.dishes.view_details">View Details</a>
                 </div>
             </div>
             
             <div class="dish-card" data-index="2">
                 <img src="resources/3.jpg" alt="Third Signature Dish" class="dish-image">
                 <div class="dish-content">
-                    <h3 class="dish-title">Third Signature Dish</h3>
-                    <p class="dish-description">A harmonious blend of traditional and modern cuisine</p>
-                    <a href="menu.html" class="dish-cta">View Details</a>
+                    <h3 class="dish-title" data-i18n="home.dishes.dish3.title">Third Signature Dish</h3>
+                    <p class="dish-description" data-i18n="home.dishes.dish3.description">A harmonious blend of traditional and modern cuisine</p>
+                    <a href="menu.html" class="dish-cta" data-i18n="home.dishes.view_details">View Details</a>
                 </div>
             </div>
             
             <div class="dish-card" data-index="3">
                 <img src="resources/5.jpg" alt="Fourth Signature Dish" class="dish-image">
                 <div class="dish-content">
-                    <h3 class="dish-title">Fourth Signature Dish</h3>
-                    <p class="dish-description">An unforgettable culinary experience</p>
-                    <a href="menu.html" class="dish-cta">View Details</a>
+                    <h3 class="dish-title" data-i18n="home.dishes.dish4.title">Fourth Signature Dish</h3>
+                    <p class="dish-description" data-i18n="home.dishes.dish4.description">An unforgettable culinary experience</p>
+                    <a href="menu.html" class="dish-cta" data-i18n="home.dishes.view_details">View Details</a>
                 </div>
             </div>
         </div>
@@ -866,26 +979,26 @@
     <!-- Story Section -->
     <section class="story-section section">
         <div class="container mx-auto px-6">
-            <h2 class="section-title font-display">Our Story</h2>
+            <h2 class="section-title font-display" data-i18n="home.story.title">Our Story</h2>
             
             <div class="story-content">
                 <div class="story-text">
-                    <p class="mb-4">
+                    <p class="mb-4" data-i18n="home.story.paragraph1">
                         Welcome to El Pacha Restaurant, where culinary excellence meets Tunisian hospitality 
                         in the heart of Sousse. Our restaurant features two distinct dining experiences - 
                         a formal restaurant-style room and a relaxed lounge-style area.
                     </p>
-                    <p class="mb-4">
+                    <p class="mb-4" data-i18n="home.story.paragraph2">
                         We are dedicated to providing an unforgettable dining experience with a perfect 
                         blend of traditional Tunisian flavors and contemporary culinary techniques. 
                         Our varied menu caters to all tastes, from fresh seafood to premium meats.
                     </p>
-                    <p>
+                    <p data-i18n="home.story.paragraph3">
                         Whether you're celebrating a special occasion or enjoying a casual meal, 
                         El Pacha Restaurant offers the perfect ambiance for every dining experience.
                     </p>
                     
-                    <a href="about.html" class="btn btn-primary mt-6 inline-block">Learn More About Us</a>
+                    <a href="about.html" class="btn btn-primary mt-6 inline-block" data-i18n="common.learn_more">Learn More About Us</a>
                 </div>
                 
                 <div>
@@ -898,8 +1011,8 @@
     <!-- Location Section with Google Maps -->
     <section class="map-section section">
         <div class="container mx-auto px-6">
-            <h2 class="section-title font-display">Our Location</h2>
-            <p class="section-subtitle">
+            <h2 class="section-title font-display" data-i18n="home.location.title">Our Location</h2>
+            <p class="section-subtitle" data-i18n="home.location.subtitle">
                 Visit us at El Pacha Restaurant in the heart of Sousse
             </p>
             
@@ -914,12 +1027,13 @@
             
             <div class="text-center mt-8">
                 <div class="inline-flex flex-col items-center space-y-2">
-                    <p class="text-lg font-semibold">RJQM+494, Sousse</p>
-                    <p class="text-gray-600">Phone: +216 23 553 443</p>
+                    <p class="text-lg font-semibold" data-i18n="footer.address">RJQM+494, Sousse</p>
+                    <p class="text-gray-600" data-i18n="footer.phone">Phone: +216 23 553 443</p>
                     <a href="https://maps.google.com/?q=El+Pacha+Restaurant,Sousse" 
                        target="_blank" 
                        class="btn btn-primary mt-4">
-                        <i class="fas fa-directions mr-2"></i>Get Directions
+                        <i class="fas fa-directions mr-2"></i>
+                        <span data-i18n="home.location.get_directions">Get Directions</span>
                     </a>
                 </div>
             </div>
@@ -931,38 +1045,253 @@
         <div class="container mx-auto px-6">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>El Pacha Restaurant</h3>
-                    <p>A Culinary Experience in Sousse</p>
-                    <p>RJQM+494, Sousse</p>
-                    <p>Phone: +216 23 553 443</p>
+                    <h3 data-i18n="footer.restaurant">El Pacha Restaurant</h3>
+                    <p data-i18n="footer.tagline">A Culinary Experience in Sousse</p>
+                    <p data-i18n="footer.address">RJQM+494, Sousse</p>
+                    <p data-i18n="footer.phone">Phone: +216 23 553 443</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Opening Hours</h3>
-                    <p>Monday: 10 AM – 11:30 PM</p>
-                    <p>Tuesday - Thursday: 10 AM – 12 AM</p>
-                    <p>Friday: 10 AM – 11:30 PM</p>
-                    <p>Saturday: 10 AM – 12 AM</p>
-                    <p>Sunday: 11:30 AM – 12 AM</p>
+                    <h3 data-i18n="footer.hours.title">Opening Hours</h3>
+                    <p data-i18n="footer.hours.monday">Monday: 10 AM – 11:30 PM</p>
+                    <p data-i18n="footer.hours.weekdays">Tuesday - Thursday: 10 AM – 12 AM</p>
+                    <p data-i18n="footer.hours.friday">Friday: 10 AM – 11:30 PM</p>
+                    <p data-i18n="footer.hours.saturday">Saturday: 10 AM – 12 AM</p>
+                    <p data-i18n="footer.hours.sunday">Sunday: 11:30 AM – 12 AM</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Connect With Us</h3>
+                    <h3 data-i18n="footer.connect.title">Connect With Us</h3>
                     <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
-                        <i class="fab fa-facebook"></i> Facebook
+                        <i class="fab fa-facebook"></i> <span data-i18n="footer.connect.facebook">Facebook</span>
                     </a>
-                    <a href="contact.html">Contact Information</a>
-                    <a href="reservation.html">Make a Reservation</a>
+                    <a href="contact.html" data-i18n="footer.connect.contact">Contact Information</a>
+                    <a href="reservation.html" data-i18n="footer.connect.reservation">Make a Reservation</a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 El Pacha Restaurant. All rights reserved.</p>
+                <p data-i18n="footer.copyright">&copy; 2025 El Pacha Restaurant. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.menu": "Menu",
+                "nav.gallery": "Gallery",
+                "nav.contact": "Contact",
+                "nav.reservations": "Reservations",
+                
+                // Common Elements
+                "common.view_menu": "View Our Menu",
+                "common.book_table": "Book a Table",
+                "common.learn_more": "Learn More About Us",
+                
+                // Home Page
+                "home.hero.title": "El Pacha Restaurant",
+                "home.hero.subtitle": "A Culinary Experience",
+                "home.hero.description": "Welcome to El Pacha Restaurant located in Sousse. The restaurant has two rooms, one restaurant-style and the other lounge-style, as well as a varied menu.",
+                
+                "home.video.title": "Video Gallery",
+                "home.video.subtitle": "Experience the ambiance and culinary artistry of El Pacha through our video collection",
+                "home.video.tour.title": "Restaurant Tour",
+                "home.video.tour.description": "Explore our elegant dining spaces",
+                "home.video.culinary.title": "Culinary Journey",
+                "home.video.culinary.description": "Behind the scenes in our kitchen",
+                "home.video.signature.title": "Signature Dishes",
+                "home.video.signature.description": "Our most celebrated creations",
+                "home.video.customer.title": "Customer Experience",
+                "home.video.customer.description": "Hear from our valued guests",
+                
+                "home.dishes.title": "Signature Dishes",
+                "home.dishes.subtitle": "Discover our chef's most celebrated creations",
+                "home.dishes.dish1.title": "First Signature Dish",
+                "home.dishes.dish1.description": "An exquisite creation showcasing our chef's culinary expertise",
+                "home.dishes.dish2.title": "Second Signature Dish",
+                "home.dishes.dish2.description": "A masterpiece of flavors and presentation",
+                "home.dishes.dish3.title": "Third Signature Dish",
+                "home.dishes.dish3.description": "A harmonious blend of traditional and modern cuisine",
+                "home.dishes.dish4.title": "Fourth Signature Dish",
+                "home.dishes.dish4.description": "An unforgettable culinary experience",
+                "home.dishes.view_details": "View Details",
+                
+                "home.story.title": "Our Story",
+                "home.story.paragraph1": "Welcome to El Pacha Restaurant, where culinary excellence meets Tunisian hospitality in the heart of Sousse. Our restaurant features two distinct dining experiences - a formal restaurant-style room and a relaxed lounge-style area.",
+                "home.story.paragraph2": "We are dedicated to providing an unforgettable dining experience with a perfect blend of traditional Tunisian flavors and contemporary culinary techniques. Our varied menu caters to all tastes, from fresh seafood to premium meats.",
+                "home.story.paragraph3": "Whether you're celebrating a special occasion or enjoying a casual meal, El Pacha Restaurant offers the perfect ambiance for every dining experience.",
+                
+                "home.location.title": "Our Location",
+                "home.location.subtitle": "Visit us at El Pacha Restaurant in the heart of Sousse",
+                "home.location.get_directions": "Get Directions",
+                
+                // Footer
+                "footer.restaurant": "El Pacha Restaurant",
+                "footer.tagline": "A Culinary Experience in Sousse",
+                "footer.address": "RJQM+494, Sousse",
+                "footer.phone": "Phone: +216 23 553 443",
+                "footer.hours.title": "Opening Hours",
+                "footer.hours.monday": "Monday: 10 AM – 11:30 PM",
+                "footer.hours.weekdays": "Tuesday - Thursday: 10 AM – 12 AM",
+                "footer.hours.friday": "Friday: 10 AM – 11:30 PM",
+                "footer.hours.saturday": "Saturday: 10 AM – 12 AM",
+                "footer.hours.sunday": "Sunday: 11:30 AM – 12 AM",
+                "footer.connect.title": "Connect With Us",
+                "footer.connect.facebook": "Facebook",
+                "footer.connect.contact": "Contact Information",
+                "footer.connect.reservation": "Make a Reservation",
+                "footer.copyright": "© 2025 El Pacha Restaurant. All rights reserved."
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.about": "À Propos",
+                "nav.menu": "Menu",
+                "nav.gallery": "Galerie",
+                "nav.contact": "Contact",
+                "nav.reservations": "Réservations",
+                
+                // Common Elements
+                "common.view_menu": "Voir Notre Menu",
+                "common.book_table": "Réserver une Table",
+                "common.learn_more": "En Savoir Plus Sur Nous",
+                
+                // Home Page
+                "home.hero.title": "Restaurant El Pacha",
+                "home.hero.subtitle": "Une Expérience Culinaire",
+                "home.hero.description": "Bienvenue au restaurant El Pacha situé à Sousse. Le restaurant dispose de deux salles, une de style restaurant et l'autre de style salon, ainsi qu'un menu varié.",
+                
+                "home.video.title": "Galerie Vidéo",
+                "home.video.subtitle": "Découvrez l'ambiance et l'art culinaire d'El Pacha à travers notre collection vidéo",
+                "home.video.tour.title": "Visite du Restaurant",
+                "home.video.tour.description": "Explorez nos espaces de restauration élégants",
+                "home.video.culinary.title": "Voyage Culinaire",
+                "home.video.culinary.description": "Dans les coulisses de notre cuisine",
+                "home.video.signature.title": "Plats Signature",
+                "home.video.signature.description": "Nos créations les plus célèbres",
+                "home.video.customer.title": "Expérience Client",
+                "home.video.customer.description": "Témoignages de nos clients précieux",
+                
+                "home.dishes.title": "Plats Signature",
+                "home.dishes.subtitle": "Découvrez les créations les plus célèbres de notre chef",
+                "home.dishes.dish1.title": "Premier Plat Signature",
+                "home.dishes.dish1.description": "Une création exquise mettant en valeur l'expertise culinaire de notre chef",
+                "home.dishes.dish2.title": "Deuxième Plat Signature",
+                "home.dishes.dish2.description": "Un chef-d'œuvre de saveurs et de présentation",
+                "home.dishes.dish3.title": "Troisième Plat Signature",
+                "home.dishes.dish3.description": "Un mélange harmonieux de cuisine traditionnelle et moderne",
+                "home.dishes.dish4.title": "Quatrième Plat Signature",
+                "home.dishes.dish4.description": "Une expérience culinaire inoubliable",
+                "home.dishes.view_details": "Voir les Détails",
+                
+                "home.story.title": "Notre Histoire",
+                "home.story.paragraph1": "Bienvenue au restaurant El Pacha, où l'excellence culinaire rencontre l'hospitalité tunisienne au cœur de Sousse. Notre restaurant propose deux expériences de restauration distinctes - une salle de style restaurant formel et un espace de style salon détendu.",
+                "home.story.paragraph2": "Nous nous engageons à offrir une expérience de restauration inoubliable avec un mélange parfait de saveurs tunisiennes traditionnelles et de techniques culinaires contemporaines. Notre menu varié répond à tous les goûts, des fruits de mer frais aux viandes de première qualité.",
+                "home.story.paragraph3": "Que vous célébriez une occasion spéciale ou que vous profitiez d'un repas décontracté, le restaurant El Pacha offre l'ambiance parfaite pour chaque expérience de restauration.",
+                
+                "home.location.title": "Notre Emplacement",
+                "home.location.subtitle": "Rendez-nous visite au restaurant El Pacha au cœur de Sousse",
+                "home.location.get_directions": "Obtenir l'Itinéraire",
+                
+                // Footer
+                "footer.restaurant": "Restaurant El Pacha",
+                "footer.tagline": "Une Expérience Culinaire à Sousse",
+                "footer.address": "RJQM+494, Sousse",
+                "footer.phone": "Téléphone: +216 23 553 443",
+                "footer.hours.title": "Heures d'Ouverture",
+                "footer.hours.monday": "Lundi: 10h – 23h30",
+                "footer.hours.weekdays": "Mardi - Jeudi: 10h – 00h",
+                "footer.hours.friday": "Vendredi: 10h – 23h30",
+                "footer.hours.saturday": "Samedi: 10h – 00h",
+                "footer.hours.sunday": "Dimanche: 11h30 – 00h",
+                "footer.connect.title": "Connectez-vous Avec Nous",
+                "footer.connect.facebook": "Facebook",
+                "footer.connect.contact": "Informations de Contact",
+                "footer.connect.reservation": "Faire une Réservation",
+                "footer.copyright": "© 2025 Restaurant El Pacha. Tous droits réservés."
+            }
+        };
+
+        // Language management
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize language system
+        function initLanguageSystem() {
+            updatePageLanguage(currentLanguage);
+            setupLanguageSwitcher();
+        }
+
+        // Update page content with selected language
+        function updatePageLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update language display
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            document.getElementById('mobileCurrentLang').textContent = lang.toUpperCase();
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                }
+            });
+        }
+
+        // Setup language switcher event listeners
+        function setupLanguageSwitcher() {
+            // Language toggle
+            const langToggle = document.getElementById('langToggle');
+            const mobileLangToggle = document.getElementById('mobileLangToggle');
+            
+            if (langToggle) {
+                langToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('langDropdown').classList.toggle('show');
+                });
+            }
+            
+            if (mobileLangToggle) {
+                mobileLangToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('mobileLangDropdown').classList.toggle('show');
+                });
+            }
+            
+            // Language selection
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    updatePageLanguage(lang);
+                    document.getElementById('langDropdown').classList.remove('show');
+                    document.getElementById('mobileLangDropdown').classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                document.getElementById('langDropdown').classList.remove('show');
+                document.getElementById('mobileLangDropdown').classList.remove('show');
+            });
+        }
+
         // Video Play Function
         function playVideo(containerId, videoId) {
             const videoContainer = document.getElementById(containerId);
@@ -1059,7 +1388,11 @@
             // Typed.js animation
             if (document.getElementById('typed-text')) {
                 new Typed('#typed-text', {
-                    strings: ['A Culinary Experience', 'Fine Dining in Sousse', 'Two Unique Atmospheres'],
+                    strings: [
+                        translations[currentLanguage]['home.hero.subtitle'],
+                        'Fine Dining in Sousse', 
+                        'Two Unique Atmospheres'
+                    ],
                     typeSpeed: 50,
                     backSpeed: 30,
                     backDelay: 2000,
@@ -1085,6 +1418,9 @@
             document.querySelectorAll('.section, .hero-title, .hero-subtitle, .hero-description').forEach(el => {
                 observer.observe(el);
             });
+
+            // Initialize language system
+            initLanguageSystem();
         });
     </script>
 </body>

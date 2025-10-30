@@ -92,6 +92,73 @@
         .nav-link.active::after {
             width: 100%;
         }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--primary-brown);
+            color: var(--primary-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-btn:hover {
+            background: var(--primary-brown);
+            color: var(--text-light);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+            padding: 8px 0;
+            min-width: 120px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .lang-dropdown.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .lang-option {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-option:hover {
+            background: var(--secondary-beige);
+            color: var(--primary-brown);
+        }
+        
+        .lang-option.active {
+            background: var(--primary-brown);
+            color: var(--text-light);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         /* Hero Section */
         .hero {
@@ -441,13 +508,32 @@
                 </div>
                 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="menu.html" class="nav-link">Menu</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
-                    <a href="contact.html" class="nav-link active">Contact</a>
-                    <a href="reservation.html" class="nav-link">Reservations</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="menu.html" class="nav-link" data-i18n="nav.menu">Menu</a>
+                    <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+                    <a href="contact.html" class="nav-link active" data-i18n="nav.contact">Contact</a>
+                    <a href="reservation.html" class="nav-link" data-i18n="nav.reservations">Reservations</a>
+                    
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="lang-btn" id="langToggle">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Mobile Menu Button -->
@@ -459,12 +545,31 @@
             <!-- Mobile Navigation -->
             <div class="md:hidden hidden mt-4 pb-4" id="mobile-menu">
                 <div class="flex flex-col space-y-4">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="menu.html" class="nav-link">Menu</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
-                    <a href="contact.html" class="nav-link active">Contact</a>
-                    <a href="reservation.html" class="nav-link">Reservations</a>
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="menu.html" class="nav-link" data-i18n="nav.menu">Menu</a>
+                    <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+                    <a href="contact.html" class="nav-link active" data-i18n="nav.contact">Contact</a>
+                    <a href="reservation.html" class="nav-link" data-i18n="nav.reservations">Reservations</a>
+                    
+                    <!-- Mobile Language Switcher -->
+                    <div class="language-switcher pt-2">
+                        <button class="lang-btn w-full justify-center" id="mobileLangToggle">
+                            <i class="fas fa-globe"></i>
+                            <span id="mobileCurrentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown w-full" id="mobileLangDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -475,32 +580,32 @@
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content container mx-auto px-6">
-            <h1 class="hero-title font-display">Contact Us</h1>
-            <p class="hero-subtitle">Get in Touch with El Pacha</p>
+            <h1 class="hero-title font-display" data-i18n="contact.hero.title">Contact Us</h1>
+            <p class="hero-subtitle" data-i18n="contact.hero.subtitle">Get in Touch with El Pacha</p>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section class="contact-section container mx-auto px-6">
-        <h2 class="section-title font-display">Contact Information</h2>
-        <p class="section-subtitle">
+        <h2 class="section-title font-display" data-i18n="contact.info.title">Contact Information</h2>
+        <p class="section-subtitle" data-i18n="contact.info.subtitle">
             We look forward to welcoming you to El Pacha Restaurant. Find our location, contact details, and opening hours below.
         </p>
         
         <div class="contact-grid">
             <div class="contact-info">
-                <h3>Get in Touch</h3>
+                <h3 data-i18n="contact.info.get_in_touch">Get in Touch</h3>
                 
                 <div class="contact-item">
                     <div class="contact-icon">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="contact-details">
-                        <h4>Location</h4>
-                        <p>RJQM+494, Sousse</p>
+                        <h4 data-i18n="contact.info.location">Location</h4>
+                        <p data-i18n="footer.address">RJQM+494, Sousse</p>
                         <a href="https://www.google.com/maps/place/El+Pacha+Restaurant/@35.837768,10.630249,17z/data=!3m1!4b1!4m6!3m5!1s0x1302759cf6bfc9c1:0x4bf7f51e899f11f3!8m2!3d35.837768!4d10.6328235!16s%2Fg%2F11v0v8v7_9?entry=ttu" 
                            target="_blank" 
-                           class="text-primary-brown hover:underline">
+                           class="text-primary-brown hover:underline" data-i18n="contact.info.view_map">
                             View on Google Maps
                         </a>
                     </div>
@@ -511,9 +616,9 @@
                         <i class="fas fa-phone"></i>
                     </div>
                     <div class="contact-details">
-                        <h4>Phone</h4>
+                        <h4 data-i18n="contact.info.phone">Phone</h4>
                         <a href="tel:+21623553443">+216 23 553 443</a>
-                        <p>Call us for reservations and inquiries</p>
+                        <p data-i18n="contact.info.phone_description">Call us for reservations and inquiries</p>
                     </div>
                 </div>
                 
@@ -522,9 +627,9 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="contact-details">
-                        <h4>Email</h4>
+                        <h4 data-i18n="contact.info.email">Email</h4>
                         <p>info@elpacha-restaurant.com</p>
-                        <p>For general inquiries and feedback</p>
+                        <p data-i18n="contact.info.email_description">For general inquiries and feedback</p>
                     </div>
                 </div>
                 
@@ -533,11 +638,11 @@
                         <i class="fab fa-facebook"></i>
                     </div>
                     <div class="contact-details">
-                        <h4>Facebook</h4>
+                        <h4 data-i18n="contact.info.facebook">Facebook</h4>
                         <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
                             Restaurant le Becha
                         </a>
-                        <p>Follow us for updates and special offers</p>
+                        <p data-i18n="contact.info.facebook_description">Follow us for updates and special offers</p>
                     </div>
                 </div>
             </div>
@@ -547,42 +652,42 @@
     <!-- Opening Hours Section -->
     <section class="hours-section">
         <div class="container mx-auto px-6">
-            <h2 class="section-title font-display">Opening Hours</h2>
+            <h2 class="section-title font-display" data-i18n="contact.hours.title">Opening Hours</h2>
             
             <div class="hours-grid">
                 <div class="hours-card">
-                    <div class="hours-day">Monday</div>
-                    <div class="hours-time">10 AM – 11:30 PM</div>
+                    <div class="hours-day" data-i18n="contact.hours.monday">Monday</div>
+                    <div class="hours-time" data-i18n="footer.hours.monday">10 AM – 11:30 PM</div>
                 </div>
                 
                 <div class="hours-card">
-                    <div class="hours-day">Tuesday</div>
-                    <div class="hours-time">10 AM – 12 AM</div>
+                    <div class="hours-day" data-i18n="contact.hours.tuesday">Tuesday</div>
+                    <div class="hours-time" data-i18n="footer.hours.weekdays">10 AM – 12 AM</div>
                 </div>
                 
                 <div class="hours-card">
-                    <div class="hours-day">Wednesday</div>
-                    <div class="hours-time">10 AM – 12 AM</div>
+                    <div class="hours-day" data-i18n="contact.hours.wednesday">Wednesday</div>
+                    <div class="hours-time" data-i18n="footer.hours.weekdays">10 AM – 12 AM</div>
                 </div>
                 
                 <div class="hours-card">
-                    <div class="hours-day">Thursday</div>
-                    <div class="hours-time">10 AM – 12 AM</div>
+                    <div class="hours-day" data-i18n="contact.hours.thursday">Thursday</div>
+                    <div class="hours-time" data-i18n="footer.hours.weekdays">10 AM – 12 AM</div>
                 </div>
                 
                 <div class="hours-card">
-                    <div class="hours-day">Friday</div>
-                    <div class="hours-time">10 AM – 11:30 PM</div>
+                    <div class="hours-day" data-i18n="contact.hours.friday">Friday</div>
+                    <div class="hours-time" data-i18n="footer.hours.friday">10 AM – 11:30 PM</div>
                 </div>
                 
                 <div class="hours-card">
-                    <div class="hours-day">Saturday</div>
-                    <div class="hours-time">10 AM – 12 AM</div>
+                    <div class="hours-day" data-i18n="contact.hours.saturday">Saturday</div>
+                    <div class="hours-time" data-i18n="footer.hours.saturday">10 AM – 12 AM</div>
                 </div>
                 
                 <div class="hours-card">
-                    <div class="hours-day">Sunday</div>
-                    <div class="hours-time">11:30 AM – 12 AM</div>
+                    <div class="hours-day" data-i18n="contact.hours.sunday">Sunday</div>
+                    <div class="hours-time" data-i18n="footer.hours.sunday">11:30 AM – 12 AM</div>
                 </div>
             </div>
         </div>
@@ -590,7 +695,7 @@
 
     <!-- Map Section - UPDATED WITH WORKING MAP -->
     <section class="map-section container mx-auto px-6">
-        <h2 class="section-title font-display">Find Us</h2>
+        <h2 class="section-title font-display" data-i18n="contact.map.title">Find Us</h2>
         
         <div class="map-container">
             <iframe 
@@ -603,11 +708,11 @@
         
         <div class="text-center mt-8">
             <div class="inline-flex flex-col items-center space-y-2">
-                <p class="text-lg font-semibold">RJQM+494, Sousse</p>
-                <p class="text-gray-600">Phone: +216 23 553 443</p>
+                <p class="text-lg font-semibold" data-i18n="footer.address">RJQM+494, Sousse</p>
+                <p class="text-gray-600" data-i18n="footer.phone">Phone: +216 23 553 443</p>
                 <a href="https://www.google.com/maps/place/El+Pacha+Restaurant/@35.837768,10.630249,17z/data=!3m1!4b1!4m6!3m5!1s0x1302759cf6bfc9c1:0x4bf7f51e899f11f3!8m2!3d35.837768!4d10.6328235!16s%2Fg%2F11v0v8v7_9?entry=ttu" 
                    target="_blank" 
-                   class="btn btn-primary mt-4">
+                   class="btn btn-primary mt-4" data-i18n="contact.map.get_directions">
                     <i class="fas fa-directions mr-2"></i>Get Directions
                 </a>
             </div>
@@ -631,38 +736,227 @@
         <div class="container mx-auto px-6">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>El Pacha Restaurant</h3>
-                    <p>A Culinary Experience in Sousse</p>
-                    <p>RJQM+494, Sousse</p>
-                    <p>Phone: +216 23 553 443</p>
+                    <h3 data-i18n="footer.restaurant">El Pacha Restaurant</h3>
+                    <p data-i18n="footer.tagline">A Culinary Experience in Sousse</p>
+                    <p data-i18n="footer.address">RJQM+494, Sousse</p>
+                    <p data-i18n="footer.phone">Phone: +216 23 553 443</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Opening Hours</h3>
-                    <p>Monday: 10 AM – 11:30 PM</p>
-                    <p>Tuesday - Thursday: 10 AM – 12 AM</p>
-                    <p>Friday: 10 AM – 11:30 PM</p>
-                    <p>Saturday: 10 AM – 12 AM</p>
-                    <p>Sunday: 11:30 AM – 12 AM</p>
+                    <h3 data-i18n="footer.hours.title">Opening Hours</h3>
+                    <p data-i18n="footer.hours.monday">Monday: 10 AM – 11:30 PM</p>
+                    <p data-i18n="footer.hours.weekdays">Tuesday - Thursday: 10 AM – 12 AM</p>
+                    <p data-i18n="footer.hours.friday">Friday: 10 AM – 11:30 PM</p>
+                    <p data-i18n="footer.hours.saturday">Saturday: 10 AM – 12 AM</p>
+                    <p data-i18n="footer.hours.sunday">Sunday: 11:30 AM – 12 AM</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Connect With Us</h3>
+                    <h3 data-i18n="footer.connect.title">Connect With Us</h3>
                     <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
-                        <i class="fab fa-facebook"></i> Facebook
+                        <i class="fab fa-facebook"></i> <span data-i18n="footer.connect.facebook">Facebook</span>
                     </a>
-                    <a href="reservation.html">Make a Reservation</a>
-                    <a href="menu.html">View Our Menu</a>
+                    <a href="reservation.html" data-i18n="footer.connect.reservation">Make a Reservation</a>
+                    <a href="menu.html" data-i18n="common.view_menu">View Our Menu</a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
+                <p data-i18n="footer.copyright">&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.menu": "Menu",
+                "nav.gallery": "Gallery",
+                "nav.contact": "Contact",
+                "nav.reservations": "Reservations",
+                
+                // Common Elements
+                "common.book_table": "Make a Reservation",
+                "common.view_menu": "View Our Menu",
+                
+                // Contact Page
+                "contact.hero.title": "Contact Us",
+                "contact.hero.subtitle": "Get in Touch with El Pacha",
+                "contact.info.title": "Contact Information",
+                "contact.info.subtitle": "We look forward to welcoming you to El Pacha Restaurant. Find our location, contact details, and opening hours below.",
+                "contact.info.get_in_touch": "Get in Touch",
+                "contact.info.location": "Location",
+                "contact.info.view_map": "View on Google Maps",
+                "contact.info.phone": "Phone",
+                "contact.info.phone_description": "Call us for reservations and inquiries",
+                "contact.info.email": "Email",
+                "contact.info.email_description": "For general inquiries and feedback",
+                "contact.info.facebook": "Facebook",
+                "contact.info.facebook_description": "Follow us for updates and special offers",
+                "contact.hours.title": "Opening Hours",
+                "contact.hours.monday": "Monday",
+                "contact.hours.tuesday": "Tuesday",
+                "contact.hours.wednesday": "Wednesday",
+                "contact.hours.thursday": "Thursday",
+                "contact.hours.friday": "Friday",
+                "contact.hours.saturday": "Saturday",
+                "contact.hours.sunday": "Sunday",
+                "contact.map.title": "Find Us",
+                "contact.map.get_directions": "Get Directions",
+                
+                // Footer
+                "footer.restaurant": "El Pacha Restaurant",
+                "footer.tagline": "A Culinary Experience in Sousse",
+                "footer.address": "RJQM+494, Sousse",
+                "footer.phone": "Phone: +216 23 553 443",
+                "footer.hours.title": "Opening Hours",
+                "footer.hours.monday": "Monday: 10 AM – 11:30 PM",
+                "footer.hours.weekdays": "Tuesday - Thursday: 10 AM – 12 AM",
+                "footer.hours.friday": "Friday: 10 AM – 11:30 PM",
+                "footer.hours.saturday": "Saturday: 10 AM – 12 AM",
+                "footer.hours.sunday": "Sunday: 11:30 AM – 12 AM",
+                "footer.connect.title": "Connect With Us",
+                "footer.connect.facebook": "Facebook",
+                "footer.connect.contact": "Contact Information",
+                "footer.connect.reservation": "Make a Reservation",
+                "footer.copyright": "© 2024 El Pacha Restaurant. All rights reserved."
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.about": "À Propos",
+                "nav.menu": "Menu",
+                "nav.gallery": "Galerie",
+                "nav.contact": "Contact",
+                "nav.reservations": "Réservations",
+                
+                // Common Elements
+                "common.book_table": "Faire une Réservation",
+                "common.view_menu": "Voir Notre Menu",
+                
+                // Contact Page
+                "contact.hero.title": "Contactez-Nous",
+                "contact.hero.subtitle": "Entrez en Contact avec El Pacha",
+                "contact.info.title": "Informations de Contact",
+                "contact.info.subtitle": "Nous sommes impatients de vous accueillir au restaurant El Pacha. Trouvez notre emplacement, nos coordonnées et nos horaires d'ouverture ci-dessous.",
+                "contact.info.get_in_touch": "Entrez en Contact",
+                "contact.info.location": "Emplacement",
+                "contact.info.view_map": "Voir sur Google Maps",
+                "contact.info.phone": "Téléphone",
+                "contact.info.phone_description": "Appelez-nous pour les réservations et les demandes de renseignements",
+                "contact.info.email": "E-mail",
+                "contact.info.email_description": "Pour les demandes générales et les commentaires",
+                "contact.info.facebook": "Facebook",
+                "contact.info.facebook_description": "Suivez-nous pour les mises à jour et les offres spéciales",
+                "contact.hours.title": "Heures d'Ouverture",
+                "contact.hours.monday": "Lundi",
+                "contact.hours.tuesday": "Mardi",
+                "contact.hours.wednesday": "Mercredi",
+                "contact.hours.thursday": "Jeudi",
+                "contact.hours.friday": "Vendredi",
+                "contact.hours.saturday": "Samedi",
+                "contact.hours.sunday": "Dimanche",
+                "contact.map.title": "Trouvez-Nous",
+                "contact.map.get_directions": "Obtenir l'Itinéraire",
+                
+                // Footer
+                "footer.restaurant": "Restaurant El Pacha",
+                "footer.tagline": "Une Expérience Culinaire à Sousse",
+                "footer.address": "RJQM+494, Sousse",
+                "footer.phone": "Téléphone: +216 23 553 443",
+                "footer.hours.title": "Heures d'Ouverture",
+                "footer.hours.monday": "Lundi: 10h – 23h30",
+                "footer.hours.weekdays": "Mardi - Jeudi: 10h – 00h",
+                "footer.hours.friday": "Vendredi: 10h – 23h30",
+                "footer.hours.saturday": "Samedi: 10h – 00h",
+                "footer.hours.sunday": "Dimanche: 11h30 – 00h",
+                "footer.connect.title": "Connectez-vous Avec Nous",
+                "footer.connect.facebook": "Facebook",
+                "footer.connect.contact": "Informations de Contact",
+                "footer.connect.reservation": "Faire une Réservation",
+                "footer.copyright": "© 2024 Restaurant El Pacha. Tous droits réservés."
+            }
+        };
+
+        // Language management
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize language system
+        function initLanguageSystem() {
+            updatePageLanguage(currentLanguage);
+            setupLanguageSwitcher();
+        }
+
+        // Update page content with selected language
+        function updatePageLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update language display
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            document.getElementById('mobileCurrentLang').textContent = lang.toUpperCase();
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                }
+            });
+        }
+
+        // Setup language switcher event listeners
+        function setupLanguageSwitcher() {
+            // Language toggle
+            const langToggle = document.getElementById('langToggle');
+            const mobileLangToggle = document.getElementById('mobileLangToggle');
+            
+            if (langToggle) {
+                langToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('langDropdown').classList.toggle('show');
+                });
+            }
+            
+            if (mobileLangToggle) {
+                mobileLangToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('mobileLangDropdown').classList.toggle('show');
+                });
+            }
+            
+            // Language selection
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    updatePageLanguage(lang);
+                    document.getElementById('langDropdown').classList.remove('show');
+                    document.getElementById('mobileLangDropdown').classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                document.getElementById('langDropdown').classList.remove('show');
+                document.getElementById('mobileLangDropdown').classList.remove('show');
+            });
+        }
+
         // Simple JavaScript for mobile menu and animations
         document.addEventListener('DOMContentLoaded', function() {
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -702,6 +996,9 @@
             document.querySelectorAll('.contact-section, .hours-section, .map-section').forEach(el => {
                 observer.observe(el);
             });
+
+            // Initialize language system
+            initLanguageSystem();
         });
     </script>
 </body>

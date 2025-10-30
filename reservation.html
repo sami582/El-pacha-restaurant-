@@ -87,6 +87,73 @@
         .nav-link.active::after {
             width: 100%;
         }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--primary-brown);
+            color: var(--primary-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-btn:hover {
+            background: var(--primary-brown);
+            color: var(--text-light);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+            padding: 8px 0;
+            min-width: 120px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .lang-dropdown.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .lang-option {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-option:hover {
+            background: var(--secondary-beige);
+            color: var(--primary-brown);
+        }
+        
+        .lang-option.active {
+            background: var(--primary-brown);
+            color: var(--text-light);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         /* Hero Section */
         .hero {
@@ -608,13 +675,32 @@
                 </div>
                 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="menu.html" class="nav-link">Menu</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="reservation.html" class="nav-link active">Reservations</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="menu.html" class="nav-link" data-i18n="nav.menu">Menu</a>
+                    <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="reservation.html" class="nav-link active" data-i18n="nav.reservations">Reservations</a>
+                    
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="lang-btn" id="langToggle">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Mobile Menu Button -->
@@ -626,12 +712,31 @@
             <!-- Mobile Navigation -->
             <div class="md:hidden hidden mt-4 pb-4" id="mobile-menu">
                 <div class="flex flex-col space-y-4">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="menu.html" class="nav-link">Menu</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="reservation.html" class="nav-link active">Reservations</a>
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+                    <a href="menu.html" class="nav-link" data-i18n="nav.menu">Menu</a>
+                    <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="reservation.html" class="nav-link active" data-i18n="nav.reservations">Reservations</a>
+                    
+                    <!-- Mobile Language Switcher -->
+                    <div class="language-switcher pt-2">
+                        <button class="lang-btn w-full justify-center" id="mobileLangToggle">
+                            <i class="fas fa-globe"></i>
+                            <span id="mobileCurrentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown w-full" id="mobileLangDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -642,15 +747,15 @@
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content container mx-auto px-6">
-            <h1 class="hero-title font-display">Book Your Table</h1>
-            <p class="hero-subtitle">Reserve Your Culinary Experience</p>
+            <h1 class="hero-title font-display" data-i18n="reservation.hero.title">Book Your Table</h1>
+            <p class="hero-subtitle" data-i18n="reservation.hero.subtitle">Reserve Your Culinary Experience</p>
         </div>
     </section>
 
     <!-- Reservation Section -->
     <section class="reservation-section container mx-auto px-6">
-        <h2 class="section-title font-display">Make a Reservation</h2>
-        <p class="section-subtitle">
+        <h2 class="section-title font-display" data-i18n="reservation.title">Make a Reservation</h2>
+        <p class="section-subtitle" data-i18n="reservation.subtitle">
             Secure your table at El Pacha Restaurant for an unforgettable dining experience. 
             We recommend booking in advance, especially for weekends and special occasions.
         </p>
@@ -661,15 +766,15 @@
             <div class="form-steps">
                 <div class="step active" data-step="1">
                     <span class="step-number">1</span>
-                    <span class="hidden md:inline">Personal Info</span>
+                    <span class="hidden md:inline" data-i18n="reservation.steps.personal">Personal Info</span>
                 </div>
                 <div class="step" data-step="2">
                     <span class="step-number">2</span>
-                    <span class="hidden md:inline">Reservation Details</span>
+                    <span class="hidden md:inline" data-i18n="reservation.steps.details">Reservation Details</span>
                 </div>
                 <div class="step" data-step="3">
                     <span class="step-number">3</span>
-                    <span class="hidden md:inline">Confirmation</span>
+                    <span class="hidden md:inline" data-i18n="reservation.steps.confirmation">Confirmation</span>
                 </div>
             </div>
             
@@ -678,44 +783,44 @@
                 <form id="reservationForm">
                     <!-- Step 1: Personal Information -->
                     <div class="form-step active" data-step="1">
-                        <h3 class="text-2xl font-bold text-primary-brown mb-6">Personal Information</h3>
+                        <h3 class="text-2xl font-bold text-primary-brown mb-6" data-i18n="reservation.step1.title">Personal Information</h3>
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="firstName" class="form-label">First Name *</label>
+                                <label for="firstName" class="form-label" data-i18n="reservation.step1.first_name">First Name *</label>
                                 <input type="text" id="firstName" name="firstName" class="form-input" required>
                             </div>
                             
                             <div class="form-group">
-                                <label for="lastName" class="form-label">Last Name *</label>
+                                <label for="lastName" class="form-label" data-i18n="reservation.step1.last_name">Last Name *</label>
                                 <input type="text" id="lastName" name="lastName" class="form-input" required>
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="email" class="form-label">Email Address *</label>
+                                <label for="email" class="form-label" data-i18n="reservation.step1.email">Email Address *</label>
                                 <input type="email" id="email" name="email" class="form-input" required>
                             </div>
                             
                             <div class="form-group">
-                                <label for="phone" class="form-label">Phone Number *</label>
+                                <label for="phone" class="form-label" data-i18n="reservation.step1.phone">Phone Number *</label>
                                 <input type="tel" id="phone" name="phone" class="form-input" required>
                             </div>
                         </div>
                         
                         <div class="form-navigation">
                             <div></div>
-                            <button type="button" class="btn btn-primary" onclick="nextStep()">Next Step</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep()" data-i18n="reservation.buttons.next">Next Step</button>
                         </div>
                     </div>
                     
                     <!-- Step 2: Reservation Details -->
                     <div class="form-step" data-step="2">
-                        <h3 class="text-2xl font-bold text-primary-brown mb-6">Reservation Details</h3>
+                        <h3 class="text-2xl font-bold text-primary-brown mb-6" data-i18n="reservation.step2.title">Reservation Details</h3>
                         
                         <div class="form-group">
-                            <label class="form-label">Number of Guests *</label>
+                            <label class="form-label" data-i18n="reservation.step2.guests">Number of Guests *</label>
                             <div class="guest-counter">
                                 <button type="button" class="counter-btn" onclick="decreaseGuests()">-</button>
                                 <div class="counter-display" id="guestCount">2</div>
@@ -726,14 +831,14 @@
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="date" class="form-label">Date *</label>
+                                <label for="date" class="form-label" data-i18n="reservation.step2.date">Date *</label>
                                 <div class="datetime-picker">
                                     <input type="date" id="date" name="date" class="form-input" required min="">
                                 </div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="time" class="form-label">Time *</label>
+                                <label for="time" class="form-label" data-i18n="reservation.step2.time">Time *</label>
                                 <div class="datetime-picker">
                                     <input type="time" id="time" name="time" class="form-input" required>
                                 </div>
@@ -741,26 +846,26 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="occasion" class="form-label">Occasion (Optional)</label>
+                            <label for="occasion" class="form-label" data-i18n="reservation.step2.occasion">Occasion (Optional)</label>
                             <select id="occasion" name="occasion" class="form-select">
-                                <option value="">Select an occasion</option>
-                                <option value="birthday">Birthday</option>
-                                <option value="anniversary">Anniversary</option>
-                                <option value="business">Business Meeting</option>
-                                <option value="date">Date Night</option>
-                                <option value="family">Family Dinner</option>
-                                <option value="other">Other</option>
+                                <option value="" data-i18n="reservation.step2.occasion_select">Select an occasion</option>
+                                <option value="birthday" data-i18n="reservation.step2.occasion_birthday">Birthday</option>
+                                <option value="anniversary" data-i18n="reservation.step2.occasion_anniversary">Anniversary</option>
+                                <option value="business" data-i18n="reservation.step2.occasion_business">Business Meeting</option>
+                                <option value="date" data-i18n="reservation.step2.occasion_date">Date Night</option>
+                                <option value="family" data-i18n="reservation.step2.occasion_family">Family Dinner</option>
+                                <option value="other" data-i18n="reservation.step2.occasion_other">Other</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="specialRequests" class="form-label">Special Requests</label>
-                            <textarea id="specialRequests" name="specialRequests" class="form-textarea" placeholder="Please let us know about any dietary restrictions, allergies, or special requests..."></textarea>
+                            <label for="specialRequests" class="form-label" data-i18n="reservation.step2.special_requests">Special Requests</label>
+                            <textarea id="specialRequests" name="specialRequests" class="form-textarea" placeholder="" data-i18n="reservation.step2.special_requests_placeholder"></textarea>
                         </div>
                         
                         <div class="form-navigation">
-                            <button type="button" class="btn btn-secondary" onclick="prevStep()">Previous</button>
-                            <button type="button" class="btn btn-primary" onclick="nextStep()">Review Reservation</button>
+                            <button type="button" class="btn btn-secondary" onclick="prevStep()" data-i18n="reservation.buttons.previous">Previous</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep()" data-i18n="reservation.buttons.review">Review Reservation</button>
                         </div>
                     </div>
                     
@@ -771,29 +876,29 @@
                                 <i class="fas fa-check-circle"></i>
                             </div>
                             
-                            <h3 class="confirmation-title">Confirm Your Reservation</h3>
-                            <p class="text-lg text-gray-600 mb-6">
+                            <h3 class="confirmation-title" data-i18n="reservation.step3.title">Confirm Your Reservation</h3>
+                            <p class="text-lg text-gray-600 mb-6" data-i18n="reservation.step3.subtitle">
                                 Please review your reservation details below before submitting.
                             </p>
                             
                             <div class="confirmation-details">
-                                <h4 class="text-lg font-bold text-primary-brown mb-4">Reservation Summary</h4>
-                                <p><strong>Name:</strong> <span id="confirmName"></span></p>
-                                <p><strong>Email:</strong> <span id="confirmEmail"></span></p>
-                                <p><strong>Phone:</strong> <span id="confirmPhone"></span></p>
-                                <p><strong>Guests:</strong> <span id="confirmGuests"></span> people</p>
-                                <p><strong>Date:</strong> <span id="confirmDate"></span></p>
-                                <p><strong>Time:</strong> <span id="confirmTime"></span></p>
-                                <p><strong>Occasion:</strong> <span id="confirmOccasion"></span></p>
+                                <h4 class="text-lg font-bold text-primary-brown mb-4" data-i18n="reservation.step3.summary">Reservation Summary</h4>
+                                <p><strong data-i18n="reservation.step3.name">Name:</strong> <span id="confirmName"></span></p>
+                                <p><strong data-i18n="reservation.step3.email">Email:</strong> <span id="confirmEmail"></span></p>
+                                <p><strong data-i18n="reservation.step3.phone">Phone:</strong> <span id="confirmPhone"></span></p>
+                                <p><strong data-i18n="reservation.step3.guests">Guests:</strong> <span id="confirmGuests"></span> <span data-i18n="reservation.step3.people">people</span></p>
+                                <p><strong data-i18n="reservation.step3.date">Date:</strong> <span id="confirmDate"></span></p>
+                                <p><strong data-i18n="reservation.step3.time">Time:</strong> <span id="confirmTime"></span></p>
+                                <p><strong data-i18n="reservation.step3.occasion">Occasion:</strong> <span id="confirmOccasion"></span></p>
                                 <div id="confirmSpecialRequests" class="mt-4">
-                                    <p><strong>Special Requests:</strong></p>
+                                    <p><strong data-i18n="reservation.step3.special_requests">Special Requests:</strong></p>
                                     <p id="confirmRequestsText"></p>
                                 </div>
                             </div>
                             
                             <div class="form-navigation">
-                                <button type="button" class="btn btn-secondary" onclick="prevStep()">Back to Edit</button>
-                                <button type="button" class="btn btn-primary" onclick="submitReservation()">Confirm Reservation</button>
+                                <button type="button" class="btn btn-secondary" onclick="prevStep()" data-i18n="reservation.buttons.back">Back to Edit</button>
+                                <button type="button" class="btn btn-primary" onclick="submitReservation()" data-i18n="reservation.buttons.confirm">Confirm Reservation</button>
                             </div>
                         </div>
                     </div>
@@ -804,18 +909,18 @@
                             <div class="success-icon">
                                 <i class="fas fa-check-circle"></i>
                             </div>
-                            <h2 class="success-title">Reservation Confirmed!</h2>
-                            <p class="success-text">
+                            <h2 class="success-title" data-i18n="reservation.success.title">Reservation Confirmed!</h2>
+                            <p class="success-text" data-i18n="reservation.success.message1">
                                 Thank you for your reservation at El Pacha Restaurant. We look forward to serving you!
                                 A confirmation email has been sent to your email address.
                             </p>
                             <p class="success-text">
-                                <strong>Reservation Details:</strong><br>
+                                <strong data-i18n="reservation.success.details">Reservation Details:</strong><br>
                                 <span id="successName"></span><br>
-                                <span id="successDate"></span> at <span id="successTime"></span><br>
-                                <span id="successGuests"></span> guests
+                                <span id="successDate"></span> <span data-i18n="reservation.success.at">at</span> <span id="successTime"></span><br>
+                                <span id="successGuests"></span> <span data-i18n="reservation.success.guests">guests</span>
                             </p>
-                            <button type="button" class="btn btn-primary" onclick="resetForm()">Make Another Reservation</button>
+                            <button type="button" class="btn btn-primary" onclick="resetForm()" data-i18n="reservation.buttons.another">Make Another Reservation</button>
                         </div>
                     </div>
                 </form>
@@ -828,8 +933,8 @@
                 <div class="info-icon">
                     <i class="fas fa-clock"></i>
                 </div>
-                <h3 class="info-title">Reservation Policy</h3>
-                <p class="info-text">
+                <h3 class="info-title" data-i18n="reservation.info.policy.title">Reservation Policy</h3>
+                <p class="info-text" data-i18n="reservation.info.policy.text">
                     We recommend making reservations at least 24 hours in advance. 
                     For same-day reservations, please call us directly at +216 23 553 443.
                 </p>
@@ -839,8 +944,8 @@
                 <div class="info-icon">
                     <i class="fas fa-utensils"></i>
                 </div>
-                <h3 class="info-title">Dietary Requirements</h3>
-                <p class="info-text">
+                <h3 class="info-title" data-i18n="reservation.info.dietary.title">Dietary Requirements</h3>
+                <p class="info-text" data-i18n="reservation.info.dietary.text">
                     Please inform us of any dietary restrictions or allergies when making your reservation. 
                     Our chef will be happy to accommodate your needs.
                 </p>
@@ -850,8 +955,8 @@
                 <div class="info-icon">
                     <i class="fas fa-phone"></i>
                 </div>
-                <h3 class="info-title">Need Help?</h3>
-                <p class="info-text">
+                <h3 class="info-title" data-i18n="reservation.info.help.title">Need Help?</h3>
+                <p class="info-text" data-i18n="reservation.info.help.text">
                     For assistance with your reservation or special requests, 
                     please contact us directly at +216 23 553 443.
                 </p>
@@ -864,38 +969,319 @@
         <div class="container mx-auto px-6">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>El Pacha Restaurant</h3>
-                    <p>A Culinary Experience in Sousse</p>
-                    <p>RJQM+494, Sousse</p>
-                    <p>Phone: +216 23 553 443</p>
+                    <h3 data-i18n="footer.restaurant">El Pacha Restaurant</h3>
+                    <p data-i18n="footer.tagline">A Culinary Experience in Sousse</p>
+                    <p data-i18n="footer.address">RJQM+494, Sousse</p>
+                    <p data-i18n="footer.phone">Phone: +216 23 553 443</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Opening Hours</h3>
-                    <p>Monday: 10 AM – 11:30 PM</p>
-                    <p>Tuesday - Thursday: 10 AM – 12 AM</p>
-                    <p>Friday: 10 AM – 11:30 PM</p>
-                    <p>Saturday: 10 AM – 12 AM</p>
-                    <p>Sunday: 11:30 AM – 12 AM</p>
+                    <h3 data-i18n="footer.hours.title">Opening Hours</h3>
+                    <p data-i18n="footer.hours.monday">Monday: 10 AM – 11:30 PM</p>
+                    <p data-i18n="footer.hours.weekdays">Tuesday - Thursday: 10 AM – 12 AM</p>
+                    <p data-i18n="footer.hours.friday">Friday: 10 AM – 11:30 PM</p>
+                    <p data-i18n="footer.hours.saturday">Saturday: 10 AM – 12 AM</p>
+                    <p data-i18n="footer.hours.sunday">Sunday: 11:30 AM – 12 AM</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Connect With Us</h3>
+                    <h3 data-i18n="footer.connect.title">Connect With Us</h3>
                     <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
-                        <i class="fab fa-facebook"></i> Facebook
+                        <i class="fab fa-facebook"></i> <span data-i18n="footer.connect.facebook">Facebook</span>
                     </a>
-                    <a href="contact.html">Contact Information</a>
-                    <a href="menu.html">View Our Menu</a>
+                    <a href="contact.html" data-i18n="footer.connect.contact">Contact Information</a>
+                    <a href="menu.html" data-i18n="common.view_menu">View Our Menu</a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
+                <p data-i18n="footer.copyright">&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.menu": "Menu",
+                "nav.gallery": "Gallery",
+                "nav.contact": "Contact",
+                "nav.reservations": "Reservations",
+                
+                // Common Elements
+                "common.book_table": "Make a Reservation",
+                "common.view_menu": "View Our Menu",
+                
+                // Reservation Page
+                "reservation.hero.title": "Book Your Table",
+                "reservation.hero.subtitle": "Reserve Your Culinary Experience",
+                "reservation.title": "Make a Reservation",
+                "reservation.subtitle": "Secure your table at El Pacha Restaurant for an unforgettable dining experience. We recommend booking in advance, especially for weekends and special occasions.",
+                "reservation.steps.personal": "Personal Info",
+                "reservation.steps.details": "Reservation Details",
+                "reservation.steps.confirmation": "Confirmation",
+                
+                // Step 1
+                "reservation.step1.title": "Personal Information",
+                "reservation.step1.first_name": "First Name *",
+                "reservation.step1.last_name": "Last Name *",
+                "reservation.step1.email": "Email Address *",
+                "reservation.step1.phone": "Phone Number *",
+                
+                // Step 2
+                "reservation.step2.title": "Reservation Details",
+                "reservation.step2.guests": "Number of Guests *",
+                "reservation.step2.date": "Date *",
+                "reservation.step2.time": "Time *",
+                "reservation.step2.occasion": "Occasion (Optional)",
+                "reservation.step2.occasion_select": "Select an occasion",
+                "reservation.step2.occasion_birthday": "Birthday",
+                "reservation.step2.occasion_anniversary": "Anniversary",
+                "reservation.step2.occasion_business": "Business Meeting",
+                "reservation.step2.occasion_date": "Date Night",
+                "reservation.step2.occasion_family": "Family Dinner",
+                "reservation.step2.occasion_other": "Other",
+                "reservation.step2.special_requests": "Special Requests",
+                "reservation.step2.special_requests_placeholder": "Please let us know about any dietary restrictions, allergies, or special requests...",
+                
+                // Step 3
+                "reservation.step3.title": "Confirm Your Reservation",
+                "reservation.step3.subtitle": "Please review your reservation details below before submitting.",
+                "reservation.step3.summary": "Reservation Summary",
+                "reservation.step3.name": "Name:",
+                "reservation.step3.email": "Email:",
+                "reservation.step3.phone": "Phone:",
+                "reservation.step3.guests": "Guests:",
+                "reservation.step3.people": "people",
+                "reservation.step3.date": "Date:",
+                "reservation.step3.time": "Time:",
+                "reservation.step3.occasion": "Occasion:",
+                "reservation.step3.special_requests": "Special Requests:",
+                
+                // Success
+                "reservation.success.title": "Reservation Confirmed!",
+                "reservation.success.message1": "Thank you for your reservation at El Pacha Restaurant. We look forward to serving you! A confirmation email has been sent to your email address.",
+                "reservation.success.details": "Reservation Details:",
+                "reservation.success.at": "at",
+                "reservation.success.guests": "guests",
+                
+                // Buttons
+                "reservation.buttons.next": "Next Step",
+                "reservation.buttons.previous": "Previous",
+                "reservation.buttons.review": "Review Reservation",
+                "reservation.buttons.back": "Back to Edit",
+                "reservation.buttons.confirm": "Confirm Reservation",
+                "reservation.buttons.another": "Make Another Reservation",
+                
+                // Info Cards
+                "reservation.info.policy.title": "Reservation Policy",
+                "reservation.info.policy.text": "We recommend making reservations at least 24 hours in advance. For same-day reservations, please call us directly at +216 23 553 443.",
+                "reservation.info.dietary.title": "Dietary Requirements",
+                "reservation.info.dietary.text": "Please inform us of any dietary restrictions or allergies when making your reservation. Our chef will be happy to accommodate your needs.",
+                "reservation.info.help.title": "Need Help?",
+                "reservation.info.help.text": "For assistance with your reservation or special requests, please contact us directly at +216 23 553 443.",
+                
+                // Footer
+                "footer.restaurant": "El Pacha Restaurant",
+                "footer.tagline": "A Culinary Experience in Sousse",
+                "footer.address": "RJQM+494, Sousse",
+                "footer.phone": "Phone: +216 23 553 443",
+                "footer.hours.title": "Opening Hours",
+                "footer.hours.monday": "Monday: 10 AM – 11:30 PM",
+                "footer.hours.weekdays": "Tuesday - Thursday: 10 AM – 12 AM",
+                "footer.hours.friday": "Friday: 10 AM – 11:30 PM",
+                "footer.hours.saturday": "Saturday: 10 AM – 12 AM",
+                "footer.hours.sunday": "Sunday: 11:30 AM – 12 AM",
+                "footer.connect.title": "Connect With Us",
+                "footer.connect.facebook": "Facebook",
+                "footer.connect.contact": "Contact Information",
+                "footer.connect.reservation": "Make a Reservation",
+                "footer.copyright": "© 2024 El Pacha Restaurant. All rights reserved."
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.about": "À Propos",
+                "nav.menu": "Menu",
+                "nav.gallery": "Galerie",
+                "nav.contact": "Contact",
+                "nav.reservations": "Réservations",
+                
+                // Common Elements
+                "common.book_table": "Faire une Réservation",
+                "common.view_menu": "Voir Notre Menu",
+                
+                // Reservation Page
+                "reservation.hero.title": "Réservez Votre Table",
+                "reservation.hero.subtitle": "Réservez Votre Expérience Culinaire",
+                "reservation.title": "Faire une Réservation",
+                "reservation.subtitle": "Réservez votre table au restaurant El Pacha pour une expérience culinaire inoubliable. Nous recommandons de réserver à l'avance, surtout pour les week-ends et les occasions spéciales.",
+                "reservation.steps.personal": "Informations Personnelles",
+                "reservation.steps.details": "Détails de Réservation",
+                "reservation.steps.confirmation": "Confirmation",
+                
+                // Step 1
+                "reservation.step1.title": "Informations Personnelles",
+                "reservation.step1.first_name": "Prénom *",
+                "reservation.step1.last_name": "Nom *",
+                "reservation.step1.email": "Adresse Email *",
+                "reservation.step1.phone": "Numéro de Téléphone *",
+                
+                // Step 2
+                "reservation.step2.title": "Détails de Réservation",
+                "reservation.step2.guests": "Nombre d'Invités *",
+                "reservation.step2.date": "Date *",
+                "reservation.step2.time": "Heure *",
+                "reservation.step2.occasion": "Occasion (Optionnel)",
+                "reservation.step2.occasion_select": "Sélectionnez une occasion",
+                "reservation.step2.occasion_birthday": "Anniversaire",
+                "reservation.step2.occasion_anniversary": "Anniversaire de Mariage",
+                "reservation.step2.occasion_business": "Réunion d'Affaires",
+                "reservation.step2.occasion_date": "Soirée en Amoureux",
+                "reservation.step2.occasion_family": "Dîner en Famille",
+                "reservation.step2.occasion_other": "Autre",
+                "reservation.step2.special_requests": "Demandes Spéciales",
+                "reservation.step2.special_requests_placeholder": "Veuillez nous informer de toute restriction alimentaire, allergie ou demande spéciale...",
+                
+                // Step 3
+                "reservation.step3.title": "Confirmez Votre Réservation",
+                "reservation.step3.subtitle": "Veuillez vérifier les détails de votre réservation ci-dessous avant de soumettre.",
+                "reservation.step3.summary": "Résumé de la Réservation",
+                "reservation.step3.name": "Nom:",
+                "reservation.step3.email": "Email:",
+                "reservation.step3.phone": "Téléphone:",
+                "reservation.step3.guests": "Invités:",
+                "reservation.step3.people": "personnes",
+                "reservation.step3.date": "Date:",
+                "reservation.step3.time": "Heure:",
+                "reservation.step3.occasion": "Occasion:",
+                "reservation.step3.special_requests": "Demandes Spéciales:",
+                
+                // Success
+                "reservation.success.title": "Réservation Confirmée!",
+                "reservation.success.message1": "Merci pour votre réservation au restaurant El Pacha. Nous avons hâte de vous servir! Un email de confirmation a été envoyé à votre adresse email.",
+                "reservation.success.details": "Détails de la Réservation:",
+                "reservation.success.at": "à",
+                "reservation.success.guests": "invités",
+                
+                // Buttons
+                "reservation.buttons.next": "Étape Suivante",
+                "reservation.buttons.previous": "Précédent",
+                "reservation.buttons.review": "Vérifier la Réservation",
+                "reservation.buttons.back": "Retour à l'Édition",
+                "reservation.buttons.confirm": "Confirmer la Réservation",
+                "reservation.buttons.another": "Faire une Autre Réservation",
+                
+                // Info Cards
+                "reservation.info.policy.title": "Politique de Réservation",
+                "reservation.info.policy.text": "Nous recommandons de faire des réservations au moins 24 heures à l'avance. Pour les réservations du jour même, veuillez nous appeler directement au +216 23 553 443.",
+                "reservation.info.dietary.title": "Exigences Alimentaires",
+                "reservation.info.dietary.text": "Veuillez nous informer de toute restriction alimentaire ou allergie lors de votre réservation. Notre chef se fera un plaisir de répondre à vos besoins.",
+                "reservation.info.help.title": "Besoin d'Aide?",
+                "reservation.info.help.text": "Pour toute assistance concernant votre réservation ou des demandes spéciales, veuillez nous contacter directement au +216 23 553 443.",
+                
+                // Footer
+                "footer.restaurant": "Restaurant El Pacha",
+                "footer.tagline": "Une Expérience Culinaire à Sousse",
+                "footer.address": "RJQM+494, Sousse",
+                "footer.phone": "Téléphone: +216 23 553 443",
+                "footer.hours.title": "Heures d'Ouverture",
+                "footer.hours.monday": "Lundi: 10h – 23h30",
+                "footer.hours.weekdays": "Mardi - Jeudi: 10h – 00h",
+                "footer.hours.friday": "Vendredi: 10h – 23h30",
+                "footer.hours.saturday": "Samedi: 10h – 00h",
+                "footer.hours.sunday": "Dimanche: 11h30 – 00h",
+                "footer.connect.title": "Connectez-vous Avec Nous",
+                "footer.connect.facebook": "Facebook",
+                "footer.connect.contact": "Informations de Contact",
+                "footer.connect.reservation": "Faire une Réservation",
+                "footer.copyright": "© 2024 Restaurant El Pacha. Tous droits réservés."
+            }
+        };
+
+        // Language management
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize language system
+        function initLanguageSystem() {
+            updatePageLanguage(currentLanguage);
+            setupLanguageSwitcher();
+        }
+
+        // Update page content with selected language
+        function updatePageLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.hasAttribute('placeholder')) {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update language display
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            document.getElementById('mobileCurrentLang').textContent = lang.toUpperCase();
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                }
+            });
+        }
+
+        // Setup language switcher event listeners
+        function setupLanguageSwitcher() {
+            // Language toggle
+            const langToggle = document.getElementById('langToggle');
+            const mobileLangToggle = document.getElementById('mobileLangToggle');
+            
+            if (langToggle) {
+                langToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('langDropdown').classList.toggle('show');
+                });
+            }
+            
+            if (mobileLangToggle) {
+                mobileLangToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('mobileLangDropdown').classList.toggle('show');
+                });
+            }
+            
+            // Language selection
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    updatePageLanguage(lang);
+                    document.getElementById('langDropdown').classList.remove('show');
+                    document.getElementById('mobileLangDropdown').classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                document.getElementById('langDropdown').classList.remove('show');
+                document.getElementById('mobileLangDropdown').classList.remove('show');
+            });
+        }
+
         // Form state
         let currentStep = 1;
         let guestCount = 2;
@@ -945,6 +1331,9 @@
             document.querySelectorAll('.reservation-section').forEach(el => {
                 observer.observe(el);
             });
+
+            // Initialize language system
+            initLanguageSystem();
         });
         
         // Step navigation functions
@@ -1021,10 +1410,10 @@
                 const phone = document.getElementById('phone').value;
                 
                 if (!firstName || !lastName || !email || !phone) {
-                    alert('Please fill in all required fields');
+                    alert(currentLanguage === 'en' ? 'Please fill in all required fields' : 'Veuillez remplir tous les champs obligatoires');
                     isValid = false;
                 } else if (!validateEmail(email)) {
-                    alert('Please enter a valid email address');
+                    alert(currentLanguage === 'en' ? 'Please enter a valid email address' : 'Veuillez entrer une adresse email valide');
                     isValid = false;
                 }
             } else if (step === 2) {
@@ -1032,7 +1421,7 @@
                 const time = document.getElementById('time').value;
                 
                 if (!date || !time) {
-                    alert('Please select a date and time for your reservation');
+                    alert(currentLanguage === 'en' ? 'Please select a date and time for your reservation' : 'Veuillez sélectionner une date et une heure pour votre réservation');
                     isValid = false;
                 }
             }
@@ -1054,14 +1443,16 @@
             document.getElementById('confirmGuests').textContent = guestCount;
             
             const date = new Date(document.getElementById('date').value);
-            document.getElementById('confirmDate').textContent = date.toLocaleDateString('en-US', { 
+            const dateOptions = { 
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-            });
+            };
+            document.getElementById('confirmDate').textContent = date.toLocaleDateString(currentLanguage === 'en' ? 'en-US' : 'fr-FR', dateOptions);
             
             document.getElementById('confirmTime').textContent = formatTime(document.getElementById('time').value);
             
             const occasion = document.getElementById('occasion').value;
-            document.getElementById('confirmOccasion').textContent = occasion ? occasion : 'None specified';
+            const occasionText = document.querySelector(`#occasion option[value="${occasion}"]`);
+            document.getElementById('confirmOccasion').textContent = occasion && occasionText ? occasionText.textContent : (currentLanguage === 'en' ? 'None specified' : 'Aucune spécifiée');
             
             const specialRequests = document.getElementById('specialRequests').value;
             const requestsContainer = document.getElementById('confirmSpecialRequests');
@@ -1078,7 +1469,7 @@
         function formatTime(timeString) {
             const [hours, minutes] = timeString.split(':');
             const hour = parseInt(hours);
-            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const ampm = hour >= 12 ? (currentLanguage === 'en' ? 'PM' : 'PM') : (currentLanguage === 'en' ? 'AM' : 'AM');
             const formattedHour = hour % 12 || 12;
             return `${formattedHour}:${minutes} ${ampm}`;
         }
@@ -1088,14 +1479,14 @@
             // Show loading state
             const submitBtn = document.querySelector('.form-step[data-step="3"] .btn-primary');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Processing...';
+            submitBtn.textContent = currentLanguage === 'en' ? 'Processing...' : 'Traitement...';
             submitBtn.disabled = true;
             
             try {
                 // Prepare form data
                 const formData = new FormData();
                 formData.append('access_key', 'f1f9f071-bca4-45d6-9029-3debfe3fb19d');
-                formData.append('subject', 'NEW RESERVATION - El Pacha Restaurant');
+                formData.append('subject', currentLanguage === 'en' ? 'NEW RESERVATION - El Pacha Restaurant' : 'NOUVELLE RÉSERVATION - Restaurant El Pacha');
                 
                 // Add form fields
                 formData.append('name', document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value);
@@ -1123,7 +1514,7 @@
                 }
             } catch (error) {
                 console.error('Error submitting form:', error);
-                alert('There was an error submitting your reservation. Please try again or call us directly at +216 23 553 443.');
+                alert(currentLanguage === 'en' ? 'There was an error submitting your reservation. Please try again or call us directly at +216 23 553 443.' : 'Une erreur s\'est produite lors de l\'envoi de votre réservation. Veuillez réessayer ou nous appeler directement au +216 23 553 443.');
                 
                 // Reset button state
                 submitBtn.textContent = originalText;
@@ -1138,12 +1529,13 @@
                 document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value;
             
             const date = new Date(document.getElementById('date').value);
-            document.getElementById('successDate').textContent = date.toLocaleDateString('en-US', { 
+            const dateOptions = { 
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-            });
+            };
+            document.getElementById('successDate').textContent = date.toLocaleDateString(currentLanguage === 'en' ? 'en-US' : 'fr-FR', dateOptions);
             
             document.getElementById('successTime').textContent = formatTime(document.getElementById('time').value);
-            document.getElementById('successGuests').textContent = guestCount + ' guests';
+            document.getElementById('successGuests').textContent = guestCount;
             
             // Move to success step
             document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');

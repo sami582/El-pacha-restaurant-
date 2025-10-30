@@ -92,6 +92,73 @@
         .nav-link.active::after {
             width: 100%;
         }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--primary-brown);
+            color: var(--primary-brown);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-btn:hover {
+            background: var(--primary-brown);
+            color: var(--text-light);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
+            padding: 8px 0;
+            min-width: 120px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .lang-dropdown.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .lang-option {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-option:hover {
+            background: var(--secondary-beige);
+            color: var(--primary-brown);
+        }
+        
+        .lang-option.active {
+            background: var(--primary-brown);
+            color: var(--text-light);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
         /* Hero Section */
         .hero {
@@ -405,13 +472,32 @@
                 </div>
                 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="about.html" class="nav-link active">About</a>
-                    <a href="menu.html" class="nav-link">Menu</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="reservation.html" class="nav-link">Reservations</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="about.html" class="nav-link active" data-i18n="nav.about">About</a>
+                    <a href="menu.html" class="nav-link" data-i18n="nav.menu">Menu</a>
+                    <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="reservation.html" class="nav-link" data-i18n="nav.reservations">Reservations</a>
+                    
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="lang-btn" id="langToggle">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Mobile Menu Button -->
@@ -423,12 +509,31 @@
             <!-- Mobile Navigation -->
             <div class="md:hidden hidden mt-4 pb-4" id="mobile-menu">
                 <div class="flex flex-col space-y-4">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="about.html" class="nav-link active">About</a>
-                    <a href="menu.html" class="nav-link">Menu</a>
-                    <a href="gallery.html" class="nav-link">Gallery</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="reservation.html" class="nav-link">Reservations</a>
+                    <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="about.html" class="nav-link active" data-i18n="nav.about">About</a>
+                    <a href="menu.html" class="nav-link" data-i18n="nav.menu">Menu</a>
+                    <a href="gallery.html" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="reservation.html" class="nav-link" data-i18n="nav.reservations">Reservations</a>
+                    
+                    <!-- Mobile Language Switcher -->
+                    <div class="language-switcher pt-2">
+                        <button class="lang-btn w-full justify-center" id="mobileLangToggle">
+                            <i class="fas fa-globe"></i>
+                            <span id="mobileCurrentLang">EN</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="lang-dropdown w-full" id="mobileLangDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span>🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr">
+                                <span>🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -439,36 +544,36 @@
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content container mx-auto px-6">
-            <h1 class="hero-title font-display">About El Pacha</h1>
-            <p class="hero-subtitle">Where Tradition Meets Excellence</p>
+            <h1 class="hero-title font-display" data-i18n="about.hero.title">About El Pacha</h1>
+            <p class="hero-subtitle" data-i18n="about.hero.subtitle">Where Tradition Meets Excellence</p>
         </div>
     </section>
 
     <!-- Story Section -->
     <section class="story-section section">
         <div class="container mx-auto px-6">
-            <h2 class="section-title font-display">Our Story</h2>
+            <h2 class="section-title font-display" data-i18n="about.story.title">Our Story</h2>
             
             <div class="story-content">
                 <div class="story-text">
-                    <p>
+                    <p data-i18n="about.story.paragraph1">
                         Welcome to El Pacha Restaurant, a culinary gem nestled in the heart of Sousse. 
                         Our journey began with a simple vision: to create a dining experience that 
                         celebrates the rich flavors of Tunisian cuisine while embracing contemporary 
                         culinary techniques.
                     </p>
-                    <p>
+                    <p data-i18n="about.story.paragraph2">
                         Named after the traditional Tunisian term for "master" or "chief," El Pacha 
                         represents our commitment to excellence in every aspect of the dining experience. 
                         From the carefully selected ingredients to the artful presentation of each dish, 
                         we strive to create memorable moments for our guests.
                     </p>
-                    <p>
+                    <p data-i18n="about.story.paragraph3">
                         Our restaurant features two distinct dining environments, each designed to cater 
                         to different moods and occasions. Whether you're seeking an intimate fine dining 
                         experience or a relaxed gathering with friends, El Pacha offers the perfect setting.
                     </p>
-                    <p>
+                    <p data-i18n="about.story.paragraph4">
                         We believe that great food is more than just sustenance—it's a celebration of 
                         culture, tradition, and the joy of sharing meals with loved ones. Our team is 
                         passionate about creating dishes that tell a story and create lasting memories.
@@ -484,8 +589,8 @@
 
     <!-- Rooms Section -->
     <section class="section container mx-auto px-6">
-        <h2 class="section-title font-display">Our Dining Rooms</h2>
-        <p class="section-subtitle">
+        <h2 class="section-title font-display" data-i18n="about.rooms.title">Our Dining Rooms</h2>
+        <p class="section-subtitle" data-i18n="about.rooms.subtitle">
             Two unique spaces, each offering a distinct dining experience
         </p>
         
@@ -493,17 +598,17 @@
             <div class="room-card">
                 <img src="resources/7.jpg" alt="Restaurant Style Room" class="room-image">
                 <div class="room-content">
-                    <h3 class="room-title">Restaurant Style</h3>
-                    <p class="room-description">
+                    <h3 class="room-title" data-i18n="about.rooms.restaurant.title">Restaurant Style</h3>
+                    <p class="room-description" data-i18n="about.rooms.restaurant.description">
                         Our formal dining room offers an elegant atmosphere perfect for special occasions, 
                         business dinners, and intimate celebrations. The sophisticated decor features 
                         warm earth tones, premium furnishings, and soft ambient lighting.
                     </p>
                     <ul class="room-features">
-                        <li><i class="fas fa-check-circle"></i> Intimate table settings</li>
-                        <li><i class="fas fa-check-circle"></i> Perfect for special occasions</li>
-                        <li><i class="fas fa-check-circle"></i> Elegant ambiance</li>
-                        <li><i class="fas fa-check-circle"></i> Professional service</li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="about.rooms.restaurant.feature1">Intimate table settings</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="about.rooms.restaurant.feature2">Perfect for special occasions</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="about.rooms.restaurant.feature3">Elegant ambiance</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="about.rooms.restaurant.feature4">Professional service</span></li>
                     </ul>
                 </div>
             </div>
@@ -511,17 +616,17 @@
             <div class="room-card">
                 <img src="resources/9.jpg" alt="Lounge Style Room" class="room-image">
                 <div class="room-content">
-                    <h3 class="room-title">Lounge Style</h3>
-                    <p class="room-description">
+                    <h3 class="room-title" data-i18n="about.rooms.lounge.title">Lounge Style</h3>
+                    <p class="room-description" data-i18n="about.rooms.lounge.description">
                         Our relaxed lounge area provides a comfortable setting for casual dining, 
                         friendly gatherings, and leisurely meals. The contemporary design includes 
                         plush seating and a more informal atmosphere.
                     </p>
                     <ul class="room-features">
-                        <li><i class="fas fa-check-circle"></i> Comfortable seating</li>
-                        <li><i class="fas fa-check-circle"></i> Casual atmosphere</li>
-                        <li><i class="fas fa-check-circle"></i> Perfect for groups</li>
-                        <li><i class="fas fa-check-circle"></i> Relaxed dining experience</li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="about.rooms.lounge.feature1">Comfortable seating</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="about.rooms.lounge.feature2">Casual atmosphere</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="about.rooms.lounge.feature3">Perfect for groups</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="about.rooms.lounge.feature4">Relaxed dining experience</span></li>
                     </ul>
                 </div>
             </div>
@@ -530,8 +635,8 @@
 
     <!-- Values Section -->
     <section class="section container mx-auto px-6">
-        <h2 class="section-title font-display">Our Values</h2>
-        <p class="section-subtitle">
+        <h2 class="section-title font-display" data-i18n="about.values.title">Our Values</h2>
+        <p class="section-subtitle" data-i18n="about.values.subtitle">
             The principles that guide our commitment to excellence
         </p>
         
@@ -540,8 +645,8 @@
                 <div class="value-icon">
                     <i class="fas fa-utensils"></i>
                 </div>
-                <h3 class="value-title">Culinary Excellence</h3>
-                <p class="value-description">
+                <h3 class="value-title" data-i18n="about.values.culinary.title">Culinary Excellence</h3>
+                <p class="value-description" data-i18n="about.values.culinary.description">
                     We are committed to using the finest ingredients and innovative techniques 
                     to create dishes that delight the senses and exceed expectations.
                 </p>
@@ -551,8 +656,8 @@
                 <div class="value-icon">
                     <i class="fas fa-hands-helping"></i>
                 </div>
-                <h3 class="value-title">Exceptional Service</h3>
-                <p class="value-description">
+                <h3 class="value-title" data-i18n="about.values.service.title">Exceptional Service</h3>
+                <p class="value-description" data-i18n="about.values.service.description">
                     Our dedicated team provides attentive, personalized service to ensure 
                     every guest feels welcome and well-cared for throughout their visit.
                 </p>
@@ -562,8 +667,8 @@
                 <div class="value-icon">
                     <i class="fas fa-heart"></i>
                 </div>
-                <h3 class="value-title">Hospitality</h3>
-                <p class="value-description">
+                <h3 class="value-title" data-i18n="about.values.hospitality.title">Hospitality</h3>
+                <p class="value-description" data-i18n="about.values.hospitality.description">
                     Rooted in Tunisian tradition, we believe in the warmth of genuine hospitality 
                     and creating a welcoming environment for all our guests.
                 </p>
@@ -573,8 +678,8 @@
                 <div class="value-icon">
                     <i class="fas fa-leaf"></i>
                 </div>
-                <h3 class="value-title">Fresh Ingredients</h3>
-                <p class="value-description">
+                <h3 class="value-title" data-i18n="about.values.ingredients.title">Fresh Ingredients</h3>
+                <p class="value-description" data-i18n="about.values.ingredients.description">
                     We source the freshest local ingredients to ensure the highest quality 
                     in every dish, supporting local producers and sustainable practices.
                 </p>
@@ -584,8 +689,8 @@
                 <div class="value-icon">
                     <i class="fas fa-users"></i>
                 </div>
-                <h3 class="value-title">Community</h3>
-                <p class="value-description">
+                <h3 class="value-title" data-i18n="about.values.community.title">Community</h3>
+                <p class="value-description" data-i18n="about.values.community.description">
                     We are proud to be part of the Sousse community and strive to create 
                     a gathering place where people can connect and create memories.
                 </p>
@@ -595,8 +700,8 @@
                 <div class="value-icon">
                     <i class="fas fa-award"></i>
                 </div>
-                <h3 class="value-title">Quality</h3>
-                <p class="value-description">
+                <h3 class="value-title" data-i18n="about.values.quality.title">Quality</h3>
+                <p class="value-description" data-i18n="about.values.quality.description">
                     From our kitchen to your table, we maintain the highest standards 
                     of quality in every aspect of our restaurant operations.
                 </p>
@@ -606,15 +711,15 @@
 
     <!-- Call to Action Section -->
     <section class="section container mx-auto px-6 text-center">
-        <h2 class="section-title font-display">Experience El Pacha</h2>
-        <p class="section-subtitle">
+        <h2 class="section-title font-display" data-i18n="about.cta.title">Experience El Pacha</h2>
+        <p class="section-subtitle" data-i18n="about.cta.subtitle">
             Ready to discover our culinary world? Book your table today and let us create 
             an unforgettable dining experience for you.
         </p>
         
         <div class="mt-8">
-            <a href="reservation.html" class="btn btn-primary">Make a Reservation</a>
-            <a href="menu.html" class="btn btn-primary ml-4">View Our Menu</a>
+            <a href="reservation.html" class="btn btn-primary" data-i18n="common.book_table">Make a Reservation</a>
+            <a href="menu.html" class="btn btn-primary ml-4" data-i18n="common.view_menu">View Our Menu</a>
         </div>
     </section>
 
@@ -623,37 +728,308 @@
         <div class="container mx-auto px-6">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>El Pacha Restaurant</h3>
-                    <p>A Culinary Experience in Sousse</p>
-                    <p>RJQM+494, Sousse</p>
-                    <p>Phone: +216 23 553 443</p>
+                    <h3 data-i18n="footer.restaurant">El Pacha Restaurant</h3>
+                    <p data-i18n="footer.tagline">A Culinary Experience in Sousse</p>
+                    <p data-i18n="footer.address">RJQM+494, Sousse</p>
+                    <p data-i18n="footer.phone">Phone: +216 23 553 443</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Opening Hours</h3>
-                    <p>Monday: 10 AM – 11:30 PM</p>
-                    <p>Tuesday - Thursday: 10 AM – 12 AM</p>
-                    <p>Friday: 10 AM – 11:30 PM</p>
-                    <p>Saturday: 10 AM – 12 AM</p>
-                    <p>Sunday: 11:30 AM – 12 AM</p>
+                    <h3 data-i18n="footer.hours.title">Opening Hours</h3>
+                    <p data-i18n="footer.hours.monday">Monday: 10 AM – 11:30 PM</p>
+                    <p data-i18n="footer.hours.weekdays">Tuesday - Thursday: 10 AM – 12 AM</p>
+                    <p data-i18n="footer.hours.friday">Friday: 10 AM – 11:30 PM</p>
+                    <p data-i18n="footer.hours.saturday">Saturday: 10 AM – 12 AM</p>
+                    <p data-i18n="footer.hours.sunday">Sunday: 11:30 AM – 12 AM</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Connect With Us</h3>
+                    <h3 data-i18n="footer.connect.title">Connect With Us</h3>
                     <a href="https://www.facebook.com/RestaurantleBecha/" target="_blank">
-                        <i class="fab fa-facebook"></i> Facebook
+                        <i class="fab fa-facebook"></i> <span data-i18n="footer.connect.facebook">Facebook</span>
                     </a>
-                    <a href="contact.html">Contact Information</a>
-                    <a href="reservation.html">Make a Reservation</a>
+                    <a href="contact.html" data-i18n="footer.connect.contact">Contact Information</a>
+                    <a href="reservation.html" data-i18n="footer.connect.reservation">Make a Reservation</a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
+                <p data-i18n="footer.copyright">&copy; 2024 El Pacha Restaurant. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="main.js"></script>
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.menu": "Menu",
+                "nav.gallery": "Gallery",
+                "nav.contact": "Contact",
+                "nav.reservations": "Reservations",
+                
+                // Common Elements
+                "common.book_table": "Make a Reservation",
+                "common.view_menu": "View Our Menu",
+                
+                // About Page
+                "about.hero.title": "About El Pacha",
+                "about.hero.subtitle": "Where Tradition Meets Excellence",
+                
+                "about.story.title": "Our Story",
+                "about.story.paragraph1": "Welcome to El Pacha Restaurant, a culinary gem nestled in the heart of Sousse. Our journey began with a simple vision: to create a dining experience that celebrates the rich flavors of Tunisian cuisine while embracing contemporary culinary techniques.",
+                "about.story.paragraph2": "Named after the traditional Tunisian term for \"master\" or \"chief,\" El Pacha represents our commitment to excellence in every aspect of the dining experience. From the carefully selected ingredients to the artful presentation of each dish, we strive to create memorable moments for our guests.",
+                "about.story.paragraph3": "Our restaurant features two distinct dining environments, each designed to cater to different moods and occasions. Whether you're seeking an intimate fine dining experience or a relaxed gathering with friends, El Pacha offers the perfect setting.",
+                "about.story.paragraph4": "We believe that great food is more than just sustenance—it's a celebration of culture, tradition, and the joy of sharing meals with loved ones. Our team is passionate about creating dishes that tell a story and create lasting memories.",
+                
+                "about.rooms.title": "Our Dining Rooms",
+                "about.rooms.subtitle": "Two unique spaces, each offering a distinct dining experience",
+                "about.rooms.restaurant.title": "Restaurant Style",
+                "about.rooms.restaurant.description": "Our formal dining room offers an elegant atmosphere perfect for special occasions, business dinners, and intimate celebrations. The sophisticated decor features warm earth tones, premium furnishings, and soft ambient lighting.",
+                "about.rooms.restaurant.feature1": "Intimate table settings",
+                "about.rooms.restaurant.feature2": "Perfect for special occasions",
+                "about.rooms.restaurant.feature3": "Elegant ambiance",
+                "about.rooms.restaurant.feature4": "Professional service",
+                
+                "about.rooms.lounge.title": "Lounge Style",
+                "about.rooms.lounge.description": "Our relaxed lounge area provides a comfortable setting for casual dining, friendly gatherings, and leisurely meals. The contemporary design includes plush seating and a more informal atmosphere.",
+                "about.rooms.lounge.feature1": "Comfortable seating",
+                "about.rooms.lounge.feature2": "Casual atmosphere",
+                "about.rooms.lounge.feature3": "Perfect for groups",
+                "about.rooms.lounge.feature4": "Relaxed dining experience",
+                
+                "about.values.title": "Our Values",
+                "about.values.subtitle": "The principles that guide our commitment to excellence",
+                "about.values.culinary.title": "Culinary Excellence",
+                "about.values.culinary.description": "We are committed to using the finest ingredients and innovative techniques to create dishes that delight the senses and exceed expectations.",
+                "about.values.service.title": "Exceptional Service",
+                "about.values.service.description": "Our dedicated team provides attentive, personalized service to ensure every guest feels welcome and well-cared for throughout their visit.",
+                "about.values.hospitality.title": "Hospitality",
+                "about.values.hospitality.description": "Rooted in Tunisian tradition, we believe in the warmth of genuine hospitality and creating a welcoming environment for all our guests.",
+                "about.values.ingredients.title": "Fresh Ingredients",
+                "about.values.ingredients.description": "We source the freshest local ingredients to ensure the highest quality in every dish, supporting local producers and sustainable practices.",
+                "about.values.community.title": "Community",
+                "about.values.community.description": "We are proud to be part of the Sousse community and strive to create a gathering place where people can connect and create memories.",
+                "about.values.quality.title": "Quality",
+                "about.values.quality.description": "From our kitchen to your table, we maintain the highest standards of quality in every aspect of our restaurant operations.",
+                
+                "about.cta.title": "Experience El Pacha",
+                "about.cta.subtitle": "Ready to discover our culinary world? Book your table today and let us create an unforgettable dining experience for you.",
+                
+                // Footer
+                "footer.restaurant": "El Pacha Restaurant",
+                "footer.tagline": "A Culinary Experience in Sousse",
+                "footer.address": "RJQM+494, Sousse",
+                "footer.phone": "Phone: +216 23 553 443",
+                "footer.hours.title": "Opening Hours",
+                "footer.hours.monday": "Monday: 10 AM – 11:30 PM",
+                "footer.hours.weekdays": "Tuesday - Thursday: 10 AM – 12 AM",
+                "footer.hours.friday": "Friday: 10 AM – 11:30 PM",
+                "footer.hours.saturday": "Saturday: 10 AM – 12 AM",
+                "footer.hours.sunday": "Sunday: 11:30 AM – 12 AM",
+                "footer.connect.title": "Connect With Us",
+                "footer.connect.facebook": "Facebook",
+                "footer.connect.contact": "Contact Information",
+                "footer.connect.reservation": "Make a Reservation",
+                "footer.copyright": "© 2024 El Pacha Restaurant. All rights reserved."
+            },
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.about": "À Propos",
+                "nav.menu": "Menu",
+                "nav.gallery": "Galerie",
+                "nav.contact": "Contact",
+                "nav.reservations": "Réservations",
+                
+                // Common Elements
+                "common.book_table": "Faire une Réservation",
+                "common.view_menu": "Voir Notre Menu",
+                
+                // About Page
+                "about.hero.title": "À Propos d'El Pacha",
+                "about.hero.subtitle": "Où la Tradition Rencontre l'Excellence",
+                
+                "about.story.title": "Notre Histoire",
+                "about.story.paragraph1": "Bienvenue au restaurant El Pacha, un joyau culinaire niché au cœur de Sousse. Notre parcours a commencé avec une vision simple : créer une expérience de restauration qui célèbre les saveurs riches de la cuisine tunisienne tout en adoptant des techniques culinaires contemporaines.",
+                "about.story.paragraph2": "Nommé d'après le terme tunisien traditionnel signifiant \"maître\" ou \"chef\", El Pacha représente notre engagement envers l'excellence dans tous les aspects de l'expérience de restauration. Des ingrédients soigneusement sélectionnés à la présentation artistique de chaque plat, nous nous efforçons de créer des moments mémorables pour nos clients.",
+                "about.story.paragraph3": "Notre restaurant propose deux environnements de restauration distincts, chacun conçu pour répondre à différentes ambiances et occasions. Que vous recherchiez une expérience de restauration raffinée et intime ou une réunion détendue entre amis, El Pacha offre le cadre parfait.",
+                "about.story.paragraph4": "Nous croyons que la bonne nourriture est plus qu'une simple subsistance - c'est une célébration de la culture, de la tradition et de la joie de partager des repas avec des êtres chers. Notre équipe est passionnée par la création de plats qui racontent une histoire et créent des souvenirs durables.",
+                
+                "about.rooms.title": "Nos Salles de Restaurant",
+                "about.rooms.subtitle": "Deux espaces uniques, chacun offrant une expérience de restauration distincte",
+                "about.rooms.restaurant.title": "Style Restaurant",
+                "about.rooms.restaurant.description": "Notre salle à manger formelle offre une atmosphère élégante parfaite pour les occasions spéciales, les dîners d'affaires et les célébrations intimes. La décoration sophistiquée présente des tons terreux chaleureux, des meubles haut de gamme et un éclairage ambiant doux.",
+                "about.rooms.restaurant.feature1": "Dispositions de table intimes",
+                "about.rooms.restaurant.feature2": "Parfait pour les occasions spéciales",
+                "about.rooms.restaurant.feature3": "Ambiance élégante",
+                "about.rooms.restaurant.feature4": "Service professionnel",
+                
+                "about.rooms.lounge.title": "Style Salon",
+                "about.rooms.lounge.description": "Notre espace salon détendu offre un cadre confortable pour les repas décontractés, les rencontres amicales et les repas tranquilles. Le design contemporain comprend des sièges moelleux et une atmosphère plus informelle.",
+                "about.rooms.lounge.feature1": "Sièges confortables",
+                "about.rooms.lounge.feature2": "Ambiance décontractée",
+                "about.rooms.lounge.feature3": "Parfait pour les groupes",
+                "about.rooms.lounge.feature4": "Expérience de restauration détendue",
+                
+                "about.values.title": "Nos Valeurs",
+                "about.values.subtitle": "Les principes qui guident notre engagement envers l'excellence",
+                "about.values.culinary.title": "Excellence Culinaire",
+                "about.values.culinary.description": "Nous nous engageons à utiliser les meilleurs ingrédients et des techniques innovantes pour créer des plats qui ravissent les sens et dépassent les attentes.",
+                "about.values.service.title": "Service Exceptionnel",
+                "about.values.service.description": "Notre équipe dévouée fournit un service attentif et personnalisé pour s'assurer que chaque client se sente accueilli et bien pris en charge tout au long de sa visite.",
+                "about.values.hospitality.title": "Hospitalité",
+                "about.values.hospitality.description": "Enracinée dans la tradition tunisienne, nous croyons en la chaleur d'une hospitalité authentique et en la création d'un environnement accueillant pour tous nos clients.",
+                "about.values.ingredients.title": "Ingrédients Frais",
+                "about.values.ingredients.description": "Nous nous approvisionnons en ingrédients locaux les plus frais pour garantir la plus haute qualité dans chaque plat, en soutenant les producteurs locaux et les pratiques durables.",
+                "about.values.community.title": "Communauté",
+                "about.values.community.description": "Nous sommes fiers de faire partie de la communauté de Sousse et nous efforçons de créer un lieu de rassemblement où les gens peuvent se connecter et créer des souvenirs.",
+                "about.values.quality.title": "Qualité",
+                "about.values.quality.description": "De notre cuisine à votre table, nous maintenons les normes de qualité les plus élevées dans tous les aspects de nos opérations de restaurant.",
+                
+                "about.cta.title": "Découvrez El Pacha",
+                "about.cta.subtitle": "Prêt à découvrir notre univers culinaire ? Réservez votre table dès aujourd'hui et laissez-nous créer une expérience de restauration inoubliable pour vous.",
+                
+                // Footer
+                "footer.restaurant": "Restaurant El Pacha",
+                "footer.tagline": "Une Expérience Culinaire à Sousse",
+                "footer.address": "RJQM+494, Sousse",
+                "footer.phone": "Téléphone: +216 23 553 443",
+                "footer.hours.title": "Heures d'Ouverture",
+                "footer.hours.monday": "Lundi: 10h – 23h30",
+                "footer.hours.weekdays": "Mardi - Jeudi: 10h – 00h",
+                "footer.hours.friday": "Vendredi: 10h – 23h30",
+                "footer.hours.saturday": "Samedi: 10h – 00h",
+                "footer.hours.sunday": "Dimanche: 11h30 – 00h",
+                "footer.connect.title": "Connectez-vous Avec Nous",
+                "footer.connect.facebook": "Facebook",
+                "footer.connect.contact": "Informations de Contact",
+                "footer.connect.reservation": "Faire une Réservation",
+                "footer.copyright": "© 2024 Restaurant El Pacha. Tous droits réservés."
+            }
+        };
+
+        // Language management
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize language system
+        function initLanguageSystem() {
+            updatePageLanguage(currentLanguage);
+            setupLanguageSwitcher();
+        }
+
+        // Update page content with selected language
+        function updatePageLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update language display
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            document.getElementById('mobileCurrentLang').textContent = lang.toUpperCase();
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                }
+            });
+        }
+
+        // Setup language switcher event listeners
+        function setupLanguageSwitcher() {
+            // Language toggle
+            const langToggle = document.getElementById('langToggle');
+            const mobileLangToggle = document.getElementById('mobileLangToggle');
+            
+            if (langToggle) {
+                langToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('langDropdown').classList.toggle('show');
+                });
+            }
+            
+            if (mobileLangToggle) {
+                mobileLangToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('mobileLangDropdown').classList.toggle('show');
+                });
+            }
+            
+            // Language selection
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    updatePageLanguage(lang);
+                    document.getElementById('langDropdown').classList.remove('show');
+                    document.getElementById('mobileLangDropdown').classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                document.getElementById('langDropdown').classList.remove('show');
+                document.getElementById('mobileLangDropdown').classList.remove('show');
+            });
+        }
+
+        // Simple JavaScript for mobile menu and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Fade in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all sections
+            document.querySelectorAll('.section').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Initialize language system
+            initLanguageSystem();
+        });
+    </script>
 </body>
 </html>
